@@ -1,0 +1,32 @@
+{
+  "name": "tyval",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tyval.js",
+  "scripts": {
+    "bench": "node bench.js",
+    "pretest": "standard",
+    "test": "ava"
+  },
+  "keywords": [
+    "type",
+    "validator",
+    "variable",
+    "check"
+  ],
+  "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/delvedor/Tyval.git"
+  },
+  "bugs": {
+    "url": "https://github.com/delvedor/Tyval/issues"
+  },
+  "homepage": "https://github.com/delvedor/Tyval#readme",
+  "devDependencies": {
+    "ava": "^0.14.0",
+    "fastbench": "^1.0.1",
+    "standard": "^7.1.0"
+  }
+}
