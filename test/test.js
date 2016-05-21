@@ -1,16 +1,17 @@
 'use strict'
 
 const test = require('ava')
-const tyval = require('./tyval')
+const tyval = require('../tyval')
 
-test('$ setter', (t) => {
-  t.plan(6)
-  t.is(tyval('').variable, '')
-  t.is(tyval(5).variable, 5)
-  t.is(tyval(null).variable, null)
-  t.is(tyval(true).variable, true)
-  t.is(tyval(false).variable, false)
-  t.deepEqual(tyval({ a: 1 }).variable, { a: 1 })
+test('tyval', (t) => {
+  t.plan(7)
+  t.is(tyval('', 0).variable, '')
+  t.is(tyval(5, 0).variable, 5)
+  t.is(tyval(null, 0).variable, null)
+  t.is(tyval(true, 0).variable, true)
+  t.is(tyval(false, 0).variable, false)
+  t.deepEqual(tyval({ a: 1 }, 0).variable, { a: 1 })
+  t.is(tyval('', 1).planned, 1)
 })
 
 test('string', (t) => {

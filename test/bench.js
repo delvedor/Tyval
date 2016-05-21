@@ -1,7 +1,7 @@
 'use strict'
 
 const bench = require('fastbench')
-const tyval = require('./tyval')
+const tyval = require('../tyval')
 
 const run = bench([
   function isString (done) {
@@ -56,4 +56,6 @@ const run = bench([
   }
 ], 1000)
 
-run(run)
+run(() => {
+  run(run)
+})
