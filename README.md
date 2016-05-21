@@ -46,75 +46,75 @@ if (tyval(str, 3).isString().min(5).max(20)) {
 - <a href="#extend"><code>tyval().<b>extend()</b></code></a>
 
 <a name="tyval"></a>
-### tyval(variable, planned)
+#### tyval(variable, planned)
 Tyval Constructor,  
 `variable` is the variable you have to check,  
 `planned`is the number of validations you are going to do.
 
 <a name="isString"></a>
-### tyval(variable, planned).isString()
+#### tyval(variable, planned).isString()
 Checks if the `variable` is a string.
 
 <a name="isNumber"></a>
-### tyval(variable, planned).isNumber()
+#### tyval(variable, planned).isNumber()
 Checks if the `variable` is a number.
 
 <a name="isNull"></a>
-### tyval(variable, planned).isNull()
+#### tyval(variable, planned).isNull()
 Checks if the `variable` is null.
 
 <a name="isUndefined"></a>
-### tyval(variable, planned).isUndefined()
+#### tyval(variable, planned).isUndefined()
 Checks if the `variable` is undefined.
 
 <a name="isBoolean"></a>
-### tyval(variable, planned).isBoolean()
+#### tyval(variable, planned).isBoolean()
 Checks if the `variable` is a boolean.
 
 <a name="isObject"></a>
-### tyval(variable, planned).isObject()
+#### tyval(variable, planned).isObject()
 Checks if the `variable` is an object.
 
 <a name="isFunction"></a>
-### tyval(variable, planned).isFunction()
+#### tyval(variable, planned).isFunction()
 Checks if the `variable` is a function.
 
 <a name="max"></a>
-### tyval(variable, planned).max(number)
+#### tyval(variable, planned).max(number)
 Checks if the `variable` is lower than the passed max value.  
 If `variable` is a string it checks the length.
 
 <a name="min"></a>
-### tyval(variable, planned).min(number)
+#### tyval(variable, planned).min(number)
 Checks if the `variable` is higher than the passed min value.  
 If `variable` is a string it checks the length.
 
 <a name="positive"></a>
-### tyval(variable, planned).positive()
+#### tyval(variable, planned).positive()
 Checks if the `variable` is positive.
 
 <a name="negative"></a>
-### tyval(variable, planned).negative()
+#### tyval(variable, planned).negative()
 Checks if the `variable` is negative.
 
 <a name="integer"></a>
-### tyval(variable, planned).integer()
+#### tyval(variable, planned).integer()
 Checks if the `variable` is an integer.
 
 <a name="float"></a>
-### tyval(variable, planned).float()
+#### tyval(variable, planned).float()
 Checks if the `variable` is a float.
 
 <a name="safeInteger"></a>
-### tyval(variable, planned).safeInteger()
+#### tyval(variable, planned).safeInteger()
 Checks if the `variable` is a safeInteger.
 
 <a name="finite"></a>
-### tyval(variable, planned).finite()
+#### tyval(variable, planned).finite()
 Checks if the `variable` is finite.
 
 <a name="extend"></a>
-### tyval(variable, planned).extend(function)
+#### tyval(variable, planned).extend(function)
 Adds a new function to tyval.  
 Usage:
 ```javascript
