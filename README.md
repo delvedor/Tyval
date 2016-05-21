@@ -27,23 +27,23 @@ if (tyval(str, 3).isString().min(5).max(20)) {
 
 <a name="api"></a>
 ## API
-- <a href="#tyval">tyval()</a>
-- <a href="#isString">tyval().**isString()**</a>
-- <a href="#isNumber">tyval().**isNumber()**</a>
-- <a href="#isNull">tyval().**isNull()**</a>
-- <a href="#isUndefined">tyval().**isUndefined()**</a>
-- <a href="#isBoolean">tyval().**isBoolean()**</a>
-- <a href="#isObject">tyval().**isObject()**</a>
-- <a href="#isFunction">tyval().**isFunction()**</a>
-- <a href="#max">tyval().**max()**</a>
-- <a href="#min">tyval().**min()**</a>
-- <a href="#positive">tyval().**positive()**</a>
-- <a href="#negative">tyval().**negative()**</a>
-- <a href="#integer">tyval().**integer()**</a>
-- <a href="#float">tyval().**float()**</a>
-- <a href="#safeInteger">tyval().**safeInteger()**</a>
-- <a href="#finite">tyval().**finite()**</a>
-- <a href="#extend">tyval().**extend()**</a>
+- <a href="#tyval"><code><b>tyval()</b></code></a>
+- <a href="#isString"><code>tyval().<b>isString()</b></code></a>
+- <a href="#isNumber"><code>tyval().<b>isNumber()</b></code></a>
+- <a href="#isNull"><code>tyval().<b>isNull()</b></code></a>
+- <a href="#isUndefined"><code>tyval().<b>isUndefined()</b></code></a>
+- <a href="#isBoolean"><code>tyval().<b>isBoolean()</b></code></a>
+- <a href="#isObject"><code>tyval().<b>isObject()</b></code></a>
+- <a href="#isFunction"><code>tyval().<b>isFunction()</b></code></a>
+- <a href="#max"><code>tyval().<b>max()</b></code></a>
+- <a href="#min"><code>tyval().<b>min()</b></code></a>
+- <a href="#positive"><code>tyval().<b>positive()</b></code></a>
+- <a href="#negative"><code>tyval().<b>negative()</b></code></a>
+- <a href="#integer"><code>tyval().<b>integer()</b></code></a>
+- <a href="#float"><code>tyval().<b>float()</b></code></a>
+- <a href="#safeInteger"><code>tyval().<b>safeInteger()</b></code></a>
+- <a href="#finite"><code>tyval().<b>finite()</b></code></a>
+- <a href="#extend"><code>tyval().<b>extend()</b></code></a>
 
 <a name="tyval"></a>
 ### tyval(variable, planned)
