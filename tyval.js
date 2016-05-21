@@ -135,12 +135,18 @@ tyval.prototype = {
   }
 }
 
+// Trick borrowed from jQuery
 tyval.Init = function (variable, planned) {
-  if (!(this instanceof tyval.Init)) return new tyval.Init(variable)
+  if (!(this instanceof tyval.Init)) return new tyval.Init(variable, planned)
+  // Validator value
   tyval.prototype.check = true
+  // Variable passed as input
   tyval.prototype.variable = variable
+  // This because typeof null = 'object'
   tyval.prototype.type = variable === null ? 'null' : typeof variable
+  // planned validation test
   tyval.prototype.planned = planned
+  // how many test are over
   tyval.prototype.passed = 0
 }
 
