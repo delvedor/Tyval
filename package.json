@@ -4,7 +4,7 @@
   "description": "Extensible type validator for JavaScript",
   "main": "tyval.js",
   "scripts": {
-    "bench": "node bench.js",
+    "bench": "node test/bench.js",
     "pretest": "standard",
     "test": "ava"
   },
