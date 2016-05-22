@@ -129,20 +129,19 @@ tyval.prototype = {
 
   // Checks if all the planned tests are over
   plan: function () {
-    this.passed++
-    if (this.planned === this.passed) return !!this.check
-    return this
+    return this.planned === ++this.passed ? !!this.check : this
   }
 }
 
 // Trick borrowed from jQuery
 tyval.Init = function (variable, planned) {
   if (!(this instanceof tyval.Init)) return new tyval.Init(variable, planned)
-  // Validator value
-  tyval.prototype.check = true
+  // Binary validator
+  tyval.prototype.check = 1
   // Variable passed as input
   tyval.prototype.variable = variable
-  // This because typeof null = 'object'
+  // Type of the variable
+  // the conditional operator because typeof null = 'object'
   tyval.prototype.type = variable === null ? 'null' : typeof variable
   // planned validation test
   tyval.prototype.planned = planned
