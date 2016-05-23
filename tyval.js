@@ -71,7 +71,8 @@ tyval.prototype = {
   },
 
   // Checks if the variable is lower than the passed max value
-  max: function (max = 0) {
+  max: function (max) {
+    max = max || 0
     switch (this.type) {
       case 'number':
         this.check &= this.variable <= max
@@ -86,7 +87,8 @@ tyval.prototype = {
   },
 
   // Checks if the variable is higher than the passed min value
-  min: function (min = 0) {
+  min: function (min) {
+    min = min || 0
     switch (this.type) {
       case 'number':
         this.check &= this.variable >= min
