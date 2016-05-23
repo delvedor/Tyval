@@ -57,6 +57,19 @@ tyval.prototype = {
     return this.plan()
   },
 
+  // Checks if the string is alphanumeric
+  alphanum: function () {
+    const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
+    this.check &= reg.test(this.variable)
+    return this.plan()
+  },
+
+  // Tests the regex passed as input
+  regex: function (reg) {
+    this.check &= reg.test(this.variable)
+    return this.plan()
+  },
+
   // Checks if the variable is lower than the passed max value
   max: function (max = 0) {
     switch (this.type) {
