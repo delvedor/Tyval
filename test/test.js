@@ -56,6 +56,22 @@ test('function', (t) => {
   t.false(tyval(1, 1).isFunction())
 })
 
+test('alphanum', (t) => {
+  t.plan(3)
+  t.true(tyval('Abcd123', 2).isString().alphanum())
+  t.false(tyval('Abcd', 2).isString().alphanum())
+  t.false(tyval('123', 2).isString().alphanum())
+})
+
+test('regex', (t) => {
+  t.plan(3)
+  // Alphanum string
+  const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
+  t.true(tyval('Abcd123', 2).isString().regex(reg))
+  t.false(tyval('Abcd', 2).isString().regex(reg))
+  t.false(tyval('123', 2).isString().regex(reg))
+})
+
 test('max', (t) => {
   t.plan(3)
   t.true(tyval(5, 2).isNumber().max(10))

@@ -25,6 +25,12 @@ const run = bench([
   function isFunction (done) {
     process.nextTick(() => { if (tyval(function () {}, 1).isFunction()) done() })
   },
+  function alphanum (done) {
+    process.nextTick(() => { if (tyval('Abcd1234', 1).alphanum()) done() })
+  },
+  function regex (done) {
+    process.nextTick(() => { if (tyval('Abcd1234', 1).regex(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)) done() })
+  },
   function max (done) {
     process.nextTick(() => { if (tyval(5, 1).max(10)) done() })
   },
