@@ -35,6 +35,8 @@ if (tyval(str, 3).isString().min(5).max(20)) {
 - <a href="#isBoolean"><code>tyval().<b>isBoolean()</b></code></a>
 - <a href="#isObject"><code>tyval().<b>isObject()</b></code></a>
 - <a href="#isFunction"><code>tyval().<b>isFunction()</b></code></a>
+- <a href="#alphanum"><code>tyval().<b>alphanum()</b></code></a>
+- <a href="#regex"><code>tyval().<b>regex()</b></code></a>
 - <a href="#max"><code>tyval().<b>max()</b></code></a>
 - <a href="#min"><code>tyval().<b>min()</b></code></a>
 - <a href="#positive"><code>tyval().<b>positive()</b></code></a>
@@ -78,6 +80,14 @@ Checks if the `variable` is an object.
 <a name="isFunction"></a>
 #### tyval(variable, planned).isFunction()
 Checks if the `variable` is a function.
+
+<a name="alphanum"></a>
+#### tyval(variable, planned).alphanum()
+Checks if the `variable` is alphanumerical.
+
+<a name="regex"></a>
+#### tyval(variable, planned).regex(regex)
+Test the regex passed as input on the `variable`.
 
 <a name="max"></a>
 #### tyval(variable, planned).max(number)
