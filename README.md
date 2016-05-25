@@ -150,6 +150,7 @@ if (tyval(0, 1).isZero()) {
 - [ ] Implement tyval().isArray()
 - [ ] Implement max/min for array.length
 - [ ] New string validation functions
+- [ ] Rewrite API for improve performances
 
 ## Contributing
 If you feel you can help in any way, be it with examples, extra testing, or new features please open a pull request or open an issue.
