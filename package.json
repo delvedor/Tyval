@@ -1,6 +1,6 @@
 {
   "name": "tyval",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Extensible type validator for JavaScript",
   "main": "tyval.js",
   "scripts": {
@@ -13,7 +13,8 @@
     "validator",
     "variable",
     "check",
-    "extensible"
+    "extensible",
+    "fast"
   ],
   "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
   "license": "MIT",
@@ -26,9 +27,9 @@
   },
   "homepage": "https://github.com/delvedor/Tyval#readme",
   "devDependencies": {
-    "ava": "^0.14.0",
+    "ava": "^0.15.1",
     "fastbench": "^1.0.1",
-    "standard": "^7.1.0"
+    "standard": "^7.1.1"
   },
   "ava": {
     "files": [
@@ -37,5 +38,10 @@
     "match": [
       "!bench"
     ]
+  },
+  "dependencies": {
+    "escodegen": "^1.8.0",
+    "esprima": "^2.7.2",
+    "estraverse": "^4.2.0"
   }
 }
