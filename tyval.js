@@ -1,6 +1,6 @@
 /*
  * Project: Tyval
- * Version: 1.0.0
+ * Version: 2.0.0
  * Author: delvedor
  * Twitter: @delvedor
  * License: MIT
@@ -8,162 +8,197 @@
  */
 
 'use strict'
+/* globals variable, check, parameters */
+/* eslint-disable no-native-reassign, no-extend-native, no-new-func */
 
-// Tyval Constructor
-function tyval (variable, planned) {
-  return new tyval.Init(variable, planned)
-}
+// Code parser
+const esprima = require('esprima')
+// AST traversal
+const estraverse = require('estraverse')
+// Code generator
+const escodegen = require('escodegen')
 
-tyval.prototype = {
+const tyval = {
+  // Validator functions
+  validators: [],
+  // Parameters for the validator functions
+  parameters: {},
   // Checks if the variable is a string
   isString: function () {
-    this.check &= this.type === 'string'
-    return this.plan()
+    this.validators.push(function isString () {
+      check &= typeof variable === 'string'
+    })
+    return this
   },
-
   // Checks if the variable is a number
   isNumber: function () {
-    this.check &= this.type === 'number'
-    return this.plan()
+    this.validators.push(function isNumber () {
+      check &= typeof variable === 'number'
+    })
+    return this
   },
-
   // Checks if the variable is null
   isNull: function () {
-    this.check &= this.type === 'null'
-    return this.plan()
+    this.validators.push(function isNull () {
+      check &= variable === null
+    })
+    return this
   },
-
   // Checks if the variable is undefined
   isUndefined: function () {
-    this.check &= this.type === 'undefined'
-    return this.plan()
+    this.validators.push(function isUndefined () {
+      check &= variable === undefined
+    })
+    return this
   },
-
   // Checks if the variable is a boolean
   isBoolean: function () {
-    this.check &= this.type === 'boolean'
-    return this.plan()
+    this.validators.push(function isBoolean () {
+      check &= typeof variable === 'boolean'
+    })
+    return this
   },
-
   // Checks if the variable is an object
   isObject: function () {
-    this.check &= this.type === 'object'
-    return this.plan()
+    this.validators.push(function isObject () {
+      check &= typeof variable === 'object'
+    })
+    return this
   },
-
   // Checks if the variable is a function
   isFunction: function () {
-    this.check &= this.type === 'function'
-    return this.plan()
+    this.validators.push(function isFunction () {
+      check &= typeof variable === 'function'
+    })
+    return this
   },
-
-  // Checks if the string is alphanumeric
+  // Checks if the string is alphanumberic
   alphanum: function () {
-    const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
-    this.check &= reg.test(this.variable)
-    return this.plan()
+    this.validators.push(function alphanum () {
+      const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
+      check &= reg.test(variable)
+    })
+    return this
   },
-
   // Tests the regex passed as input
-  regex: function (reg) {
-    this.check &= reg.test(this.variable)
-    return this.plan()
-  },
-
-  // Checks if the variable is lower than the passed max value
-  max: function (max) {
-    max = max || 0
-    switch (this.type) {
-      case 'number':
-        this.check &= this.variable <= max
-        break
-      case 'string':
-        this.check &= this.variable.length <= max
-        break
-      default:
-        this.check = false
+  regex: function (reg, flag) {
+    this.parameters.regex = {
+      reg: reg,
+      flag: flag
     }
-    return this.plan()
+    this.validators.push(function regex () {
+      let reg = new RegExp(parameters.regex.reg, parameters.regex.flag)
+      check &= reg.test(variable)
+    })
+    return this
   },
-
-  // Checks if the variable is higher than the passed min value
-  min: function (min) {
-    min = min || 0
-    switch (this.type) {
-      case 'number':
-        this.check &= this.variable >= min
-        break
-      case 'string':
-        this.check &= this.variable.length >= min
-        break
-      default:
-        this.check = false
-    }
-    return this.plan()
+  // Checks if the string.length is lower than the passed max value
+  maxStr: function (max) {
+    this.parameters.maxStr = max
+    this.validators.push(function max () {
+      check &= variable.length <= parameters.maxStr
+    })
+    return this
   },
-
+  // Checks if the string.length is higher than the passed value
+  minStr: function (min) {
+    this.parameters.minStr = min
+    this.validators.push(function min () {
+      check &= variable.length >= parameters.minStr
+    })
+    return this
+  },
+  // Checks if the number is lower than the passed value
+  maxNum: function (max) {
+    this.parameters.maxNumber = max
+    this.validators.push(function max () {
+      check &= variable <= parameters.maxNumber
+    })
+    return this
+  },
+  // Checks if the number is higher than the passed value
+  minNum: function (min) {
+    this.parameters.minNumber = min
+    this.validators.push(function min () {
+      check &= variable >= parameters.minNumber
+    })
+    return this
+  },
+  // Checks if the variable is a positive number
   positive: function () {
-    this.check &= this.variable > 0
-    return this.plan()
+    this.validators.push(function positive () {
+      check &= variable > 0
+    })
+    return this
   },
-
+  // Checks if the variable is a negative number
   negative: function () {
-    this.check &= this.variable < 0
-    return this.plan()
+    this.validators.push(function negative () {
+      check &= variable < 0
+    })
+    return this
   },
-
-  // Checks if the Number is an Integer
+  // Checks if the variable is an Integer
   integer: function () {
-    this.check &= Number.isInteger(this.variable)
-    return this.plan()
+    this.validators.push(function integer () {
+      check &= Number.isInteger(variable)
+    })
+    return this
   },
-
-  // Checks if the Number is a Float
+  // Checks if the variable is a Float
   float: function () {
-    this.check &= !Number.isInteger(this.variable)
-    return this.plan()
+    this.validators.push(function float () {
+      check &= !Number.isInteger(variable)
+    })
+    return this
   },
-
-  // Checks if the Number is a safe Integer
+  // Checks if the variable is a safe integer
   safeInteger: function () {
-    this.check &= Number.isSafeInteger(this.variable)
-    return this.plan()
+    this.validators.push(function safeInteger () {
+      check &= Number.isSafeInteger(variable)
+    })
+    return this
   },
-
-  // Checks if the Number is finite
+  // Checks if the variable is a finite number
   finite: function () {
-    this.check &= Number.isFinite(this.variable)
-    return this.plan()
+    this.validators.push(function finite () {
+      check &= Number.isFinite(variable)
+    })
+    return this
   },
-
-  // Adds a new function to Tyval
+  // Adds a new function to tyval
   extend: function (func) {
-    tyval.prototype[func.name] = func
-    return this.plan()
+    tyval[func.name] = func
   },
-
-  // Checks if all the planned tests are over
-  plan: function () {
-    return this.planned === ++this.passed ? !!this.check : this
+  // Parse the validators code in a single function
+  toFunction: function () {
+    // Fix for the RegExp to JSON
+    RegExp.prototype.toJSON = RegExp.prototype.toString
+    let functionCode = '"use strict";\nlet check = 1;\nlet parameters = ' + JSON.stringify(this.parameters) + '\n'
+    let ast = null
+    let block = null
+    this.validators.forEach(function (code) {
+      // get function ast
+      ast = esprima.parse(code.toString(), {})
+      block = null
+      estraverse.traverse(ast, {
+        enter: function (node, parent) {
+          // gets only the function code
+          if (node.type === 'BlockStatement') {
+            block = node
+            this.break()
+          }
+        }
+      })
+      // generate the function code without the function declaration
+      functionCode += escodegen.generate(block) + ';\n'
+    })
+    functionCode += 'return !!check;'
+    // restore validators and parameters
+    this.validators = []
+    this.parameters = {}
+    return new Function('variable', functionCode)
   }
 }
-
-// Trick borrowed from jQuery
-tyval.Init = function (variable, planned) {
-  if (!(this instanceof tyval.Init)) return new tyval.Init(variable, planned)
-  // Binary validator
-  tyval.prototype.check = 1
-  // Variable passed as input
-  tyval.prototype.variable = variable
-  // Type of the variable
-  // the conditional operator because typeof null = 'object'
-  tyval.prototype.type = variable === null ? 'null' : typeof variable
-  // planned validation test
-  tyval.prototype.planned = planned
-  // how many test are over
-  tyval.prototype.passed = 0
-}
-
-tyval.Init.prototype = tyval.prototype
 
 module.exports = tyval
