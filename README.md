@@ -151,7 +151,7 @@ Checks if the `variable` is finite.
 #### tyval.extend(function)
 Adds a new function to tyval.  
 You can access the variable to validate via `variable`   
-Use `check &=` to elaborate your validation.  
+Use `check = check &&` to elaborate your validation.  
 Usage:
 ```javascript
 tyval.extend(function someName () {
