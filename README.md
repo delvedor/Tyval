@@ -1,7 +1,7 @@
 # Tyval
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval)
 
-Tyval is an extensible type validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of fast and useful validation functions, with a self-descriptive name.
+Tyval is an extensible type validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of [fast](https://github.com/delvedor/Tyval/tree/master/bench) and useful validation functions, with a self-descriptive name.
 
 ## Install
 ```
@@ -33,11 +33,14 @@ Note that the `.toFunction()` at the end of your validation code is mandatory.
 - <a href="#isUndefined"><code>tyval.<b>isUndefined()</b></code></a>
 - <a href="#isBoolean"><code>tyval.<b>isBoolean()</b></code></a>
 - <a href="#isObject"><code>tyval.<b>isObject()</b></code></a>
+- <a href="#isArray"><code>tyval.<b>isArray()</b></code></a>
 - <a href="#isFunction"><code>tyval.<b>isFunction()</b></code></a>
 - <a href="#alphanum"><code>tyval.<b>alphanum()</b></code></a>
 - <a href="#regex"><code>tyval.<b>regex()</b></code></a>
 - <a href="#maxStr"><code>tyval.<b>maxStr()</b></code></a>
 - <a href="#minStr"><code>tyval.<b>minStr()</b></code></a>
+- <a href="#maxArray"><code>tyval.<b>maxArray()</b></code></a>
+- <a href="#minArray"><code>tyval.<b>minArray()</b></code></a>
 - <a href="#maxNum"><code>tyval.<b>maxNum()</b></code></a>
 - <a href="#minNum"><code>tyval.<b>minNum()</b></code></a>
 - <a href="#positive"><code>tyval.<b>positive()</b></code></a>
@@ -72,6 +75,10 @@ Checks if the `variable` is a boolean.
 #### tyval.isObject()
 Checks if the `variable` is an object.
 
+<a name="isArray"></a>
+#### tyval.isArray()
+Checks if the `variable` is an array.
+
 <a name="isFunction"></a>
 #### tyval.isFunction()
 Checks if the `variable` is a function.
@@ -93,6 +100,16 @@ Checks if the `variable.length` is lower than the passed max value.
 
 <a name="minStr"></a>
 #### tyval.minStr(number)
+Checks if the `variable.length` is higher than the passed min value.  
+`number` is the number value to check.
+
+<a name="maxArray"></a>
+#### tyval.maxArray(number)
+Checks if the `variable.length` is lower than the passed max value.  
+`number` is the number value to check.
+
+<a name="minArray"></a>
+#### tyval.minArray(number)
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
@@ -140,7 +157,7 @@ Usage:
 tyval.extend(function someName () {
   this.validators.push(function someName () {
     // your validation code
-    check &= // your boolean validator
+    check = check && // your boolean validator
   })
   return this
 })
@@ -149,7 +166,7 @@ Example:
 ```javascript
 tyval.extend(function isZero () {
   this.validators.push(function isZero () {
-    check &= variable === 0
+    check = check && variable === 0
   })
   return this
 })
@@ -167,7 +184,7 @@ tyval.extend(function someName (param) {
     // your validation code
     // access the parameter via parameters.paramName
     console.log(parameters.paramName)
-    check &= // your boolean validator
+    check = check && // your boolean validator
   })
   return this
 })
@@ -178,7 +195,7 @@ As you can imagine, `variable`, `check` and `parameters` are reserved names of *
 tyval.extend(function lessThan (num) {
   this.parameters.lessThanParam = num
   this.validators.push(function lessThan () {
-    check &= variable < parameters.lessThanParam
+    check = check && variable < parameters.lessThanParam
   })
   return this
 })
@@ -192,8 +209,10 @@ if (lessThan(10)) {
 
 ## TODO
 - [x] Rewrite API to improve performances
-- [ ] Implement tyval.isArray()
-- [ ] Implement max/min for array.length
+- [x] Implement tyval.isArray()
+- [x] Implement max/min for array.length
+- [ ] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
+- [ ] Add code coverage
 - [ ] New string validation functions
 
 ## Contributing

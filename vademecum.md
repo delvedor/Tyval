@@ -18,11 +18,11 @@ Before start with the explanation let me introduce the main parameters that we a
 Ok, now we can start:  
 First, *toFunction* declare the first part of *functionCode*:
 - `use strict` for compatibility with Node v4 and because *"use strict"* is always good;
-- `check`: who is a binary value and it's used inside the validation functions;
+- `check`: that is a boolean value and it's used inside the validation functions;
 - `parameters`: stringify the parameters object.
 
 ```javascript
-let functionCode = '"use strict";\nlet check = 1;\nlet parameters = ' + JSON.stringify(this.parameters) + '\n'
+let functionCode = '"use strict";\nlet check = true;\nlet parameters = ' + JSON.stringify(this.parameters) + '\n'
 ```
 
 *toFunction()* iterates over the validators array and generates an *AST* (Abstract Syntax Tree) for every function via [esprima](http://esprima.org/),
@@ -41,12 +41,17 @@ estraverse.traverse(ast, {
 })
 ```
 and finally via [escodegen](https://github.com/estools/escodegen) appends the code to *functionCode*; it preserves the curly braces for making a scope for every validation, in this way we avoid naming conflict.  
+It adds by default an `if (!check)`, in this way if one test fails, the function terminates immediately.
 ```javascript
-functionCode += escodegen.generate(block) + ';\n'
+if (index === array.length - 1) {
+  functionCode += escodegen.generate(block) + ';\n'
+} else {
+  functionCode += escodegen.generate(block) + ';\nif (!check) { return false; }\n'
+}
 ```
 When *toFunction* terminates the code merge, it appends the *return block* and generates the final function via the `new Function()` constructor.
 ```javascript
-functionCode += 'return !!check;'
+functionCode += 'return check;'
 return new Function('variable', functionCode)
 ```
 ### **validators** array
