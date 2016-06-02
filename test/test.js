@@ -211,13 +211,32 @@ test('finite', (t) => {
   t.false(fin(Number.POSITIVE_INFINITY))
 })
 
-test('big test', (t) => {
+test('numTest', (t) => {
   t.plan(4)
-  let check = tyval.isNumber().minNum(-5).maxNum(10).integer().finite().safeInteger().toFunction()
-  t.is(typeof check, 'function')
-  t.true(check(5))
-  t.false(check(15))
-  t.false(check('15'))
+  let numTest = tyval.isNumber().minNum(-5).maxNum(10).integer().finite().safeInteger().toFunction()
+  t.is(typeof numTest, 'function')
+  t.true(numTest(5))
+  t.false(numTest(15))
+  t.false(numTest('15'))
+})
+
+test('strTest', (t) => {
+  t.plan(5)
+  let strTest = tyval.isString().minStr(5).maxStr(10).alphanum().toFunction()
+  t.is(typeof strTest, 'function')
+  t.true(strTest('abc123'))
+  t.false(strTest('abc'))
+  t.false(strTest('123'))
+  t.false(strTest(123))
+})
+
+test('arrayTest', (t) => {
+  t.plan(4)
+  let arrayTest = tyval.isArray().maxArray(10).minArray(2).toFunction()
+  t.is(typeof arrayTest, 'function')
+  t.true(arrayTest([1, 2, 3]))
+  t.false(arrayTest([1]))
+  t.false(arrayTest({}))
 })
 
 test('extend', (t) => {
