@@ -65,6 +65,15 @@ test('object', (t) => {
   t.false(obj('test'))
 })
 
+test('array', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.isArray, 'function')
+  let arr = tyval.isArray().toFunction()
+  t.is(typeof arr, 'function')
+  t.true(arr([]))
+  t.false(arr('test'))
+})
+
 test('function', (t) => {
   t.plan(4)
   t.is(typeof tyval.isFunction, 'function')
@@ -110,6 +119,24 @@ test('minStr', (t) => {
   t.is(typeof min, 'function')
   t.true(min('test'))
   t.false(min('no'))
+})
+
+test('maxArray', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.maxArray, 'function')
+  let max = tyval.maxArray(10).toFunction()
+  t.is(typeof max, 'function')
+  t.true(max([1, 2, 3]))
+  t.false(max([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]))
+})
+
+test('minArray', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.minArray, 'function')
+  let min = tyval.minArray(3).toFunction()
+  t.is(typeof min, 'function')
+  t.true(min([1, 2, 3, 4]))
+  t.false(min([]))
 })
 
 test('maxNum', (t) => {
@@ -197,7 +224,7 @@ test('extend', (t) => {
   t.plan(4)
   tyval.extend(function isZero () {
     this.validators.push(function isZero () {
-      check &= variable === 0
+      check = check && variable === 0
     })
     return this
   })
