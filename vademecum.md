@@ -10,7 +10,7 @@ Below you will find all the main parts of the code and their explanation.
 
 ### **toFunction** method
 This method is the core of the library, its purpose is to take all the validation function and merge them into a single function.  
-Before start with the explanation let me introduce the main parameters that we are gonna to use.
+Before starting with the explanation let me introduce the main parameters that we are gonna to use.
 - `validators`, an array with all the validation function, every function of tyval pushes a function into this array when is called, in this way when toFunction is called, it knows which function it has to merge together.  
 - `functionCode`, who is a string with all the function code.  
 - `parameters` is an object with all the parameters passed to the validation function.
@@ -43,16 +43,43 @@ estraverse.traverse(ast, {
 and finally via [escodegen](https://github.com/estools/escodegen) appends the code to *functionCode*; it preserves the curly braces for making a scope for every validation, in this way we avoid naming conflict.  
 It adds by default an `if (!check)`, in this way if one test fails, the function terminates immediately.
 ```javascript
-if (index === array.length - 1) {
-  functionCode += escodegen.generate(block) + ';\n'
-} else {
-  functionCode += escodegen.generate(block) + ';\nif (!check) { return false; }\n'
-}
+functionCode += escodegen.generate(block) + ';\n'
+if (index !== array.length - 1) functionCode += 'if(!check) { return false; }\n'
 ```
 When *toFunction* terminates the code merge, it appends the *return block* and generates the final function via the `new Function()` constructor.
 ```javascript
 functionCode += 'return check;'
 return new Function('variable', functionCode)
+```
+**Real world example:**  
+This following code
+```javascript
+const strTest = tyval.isString().minStr(5).maxStr(10).alphanum().toFunction()
+```
+generates:
+```javascript
+function () {
+  "use strict";
+  let check = true;
+  let parameters = {"minStr":5,"maxStr":10}
+  {
+    check = check && typeof variable === 'string';
+  };
+  if(!check) { return false; }
+  {
+    check = check && variable.length >= parameters.minStr;
+  };
+  if(!check) { return false; }
+  {
+    check = check && variable.length <= parameters.maxStr;
+  };
+  if(!check) { return false; }
+  {
+    const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
+    check = check && reg.test(variable);
+  };
+  return check;
+}
 ```
 ### **validators** array
 Tyval uses the *validators* function array because of how works *toFunction*, it's useful for make easier generate the final function code.
