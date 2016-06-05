@@ -19,10 +19,20 @@ Ok, now we can start:
 First, *toFunction* declare the first part of *functionCode*:
 - `use strict` for compatibility with Node v4 and because *"use strict"* is always good;
 - `check`: that is a boolean value and it's used inside the validation functions;
-- `parameters`: stringify the parameters object.
+- Declaration of all the passed parameters.
 
 ```javascript
-let functionCode = '"use strict";\nlet check = true;\nlet parameters = ' + JSON.stringify(this.parameters) + '\n'
+let functionCode = '"use strict";\nlet check = true;\n'
+// Adds variables to functionCode
+for (let val in parameters) {
+  if (typeof parameters[val] === 'string') {
+    functionCode += 'let ' + val + ' = "' + parameters[val] + '";\n'
+  } else if (typeof parameters[val] === 'object' && !(parameters[val] instanceof RegExp)) {
+    functionCode += 'let ' + val + ' = ' + JSON.stringify(parameters[val]) + ';\n'
+  } else {
+    functionCode += 'let ' + val + ' = ' + parameters[val] + ';\n'
+  }
+}
 ```
 
 *toFunction()* iterates over the validators array and generates an *AST* (Abstract Syntax Tree) for every function via [esprima](http://esprima.org/),
@@ -44,7 +54,6 @@ and finally via [escodegen](https://github.com/estools/escodegen) appends the co
 It adds by default an `if (!check)`, in this way if one test fails, the function terminates immediately.
 ```javascript
 functionCode += escodegen.generate(block) + ';\n'
-if (index !== array.length - 1) functionCode += 'if(!check) { return false; }\n'
 ```
 When *toFunction* terminates the code merge, it appends the *return block* and generates the final function via the `new Function()` constructor.
 ```javascript
@@ -54,26 +63,24 @@ return new Function('variable', functionCode)
 **Real world example:**  
 This following code
 ```javascript
-const strTest = tyval.isString().minStr(5).maxStr(10).alphanum().toFunction()
+const strTest = tyval.string().min(5).max(10).alphanum().toFunction()
 ```
 generates:
 ```javascript
 function () {
   "use strict";
   let check = true;
-  let parameters = {"minStr":5,"maxStr":10}
+  let min = 5;
+  let max = 10;
   {
     check = check && typeof variable === 'string';
   };
-  if(!check) { return false; }
   {
-    check = check && variable.length >= parameters.minStr;
+    check = check && variable.length >= min;
   };
-  if(!check) { return false; }
   {
-    check = check && variable.length <= parameters.maxStr;
+    check = check && variable.length <= max;
   };
-  if(!check) { return false; }
   {
     const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
     check = check && reg.test(variable);

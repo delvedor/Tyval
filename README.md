@@ -13,12 +13,12 @@ Easily require it, compose a function with the chainable api and then use it.
 ```javascript
 const tyval = require('tyval')
 
-const stringCheck = tyval.isString().maxStr(10).minStr(1).toFunction()
+const stringCheck = tyval.string().max(10).min(1).toFunction()
 if (stringCheck('Test')) {
   console.log('yay!')
 }
 
-const numberCheck = tyval.isNumber().maxNum(1000).minNum(1).integer().toFunction()
+const numberCheck = tyval.number().max(1000).min(1).integer().toFunction()
 if (numberCheck(42)) {
   console.log('The answer')
 }
@@ -27,135 +27,143 @@ Note that the `.toFunction()` at the end of your validation code is mandatory.
 
 <a name="api"></a>
 ## API
-- <a href="#isString"><code>tyval.<b>isString()</b></code></a>
-- <a href="#isNumber"><code>tyval.<b>isNumber()</b></code></a>
-- <a href="#isNull"><code>tyval.<b>isNull()</b></code></a>
-- <a href="#isUndefined"><code>tyval.<b>isUndefined()</b></code></a>
-- <a href="#isBoolean"><code>tyval.<b>isBoolean()</b></code></a>
-- <a href="#isObject"><code>tyval.<b>isObject()</b></code></a>
-- <a href="#isArray"><code>tyval.<b>isArray()</b></code></a>
-- <a href="#isFunction"><code>tyval.<b>isFunction()</b></code></a>
-- <a href="#alphanum"><code>tyval.<b>alphanum()</b></code></a>
-- <a href="#regex"><code>tyval.<b>regex()</b></code></a>
-- <a href="#maxStr"><code>tyval.<b>maxStr()</b></code></a>
-- <a href="#minStr"><code>tyval.<b>minStr()</b></code></a>
-- <a href="#maxArray"><code>tyval.<b>maxArray()</b></code></a>
-- <a href="#minArray"><code>tyval.<b>minArray()</b></code></a>
-- <a href="#maxNum"><code>tyval.<b>maxNum()</b></code></a>
-- <a href="#minNum"><code>tyval.<b>minNum()</b></code></a>
-- <a href="#positive"><code>tyval.<b>positive()</b></code></a>
-- <a href="#negative"><code>tyval.<b>negative()</b></code></a>
-- <a href="#integer"><code>tyval.<b>integer()</b></code></a>
-- <a href="#float"><code>tyval.<b>float()</b></code></a>
-- <a href="#safeInteger"><code>tyval.<b>safeInteger()</b></code></a>
-- <a href="#finite"><code>tyval.<b>finite()</b></code></a>
-- <a href="#extend"><code>tyval.<b>extend()</b></code></a>
+- <a href="#string"><code>tyval.<b>string()</b></code></a>
+  * <a href="#alphanum"><code>tyval.string().<b>alphanum()</b></code></a>
+  * <a href="#regex"><code>tyval.string().<b>regex()</b></code></a>
+  * <a href="#maxStr"><code>tyval.string().<b>max()</b></code></a>
+  * <a href="#minStr"><code>tyval.string().<b>min()</b></code></a>
 
-<a name="isString"></a>
-#### tyval.isString()
+- <a href="#number"><code>tyval.<b>number()</b></code></a>
+  * <a href="#maxNum"><code>tyval.number().<b>max()</b></code></a>
+  * <a href="#minNum"><code>tyval.number().<b>min()</b></code></a>
+  * <a href="#positive"><code>tyval.number().<b>positive()</b></code></a>
+  * <a href="#negative"><code>tyval.number().<b>negative()</b></code></a>
+  * <a href="#integer"><code>tyval.number().<b>integer()</b></code></a>
+  * <a href="#float"><code>tyval.number().<b>float()</b></code></a>
+  * <a href="#safeInteger"><code>tyval.number().<b>safeInteger()</b></code></a>
+  * <a href="#finite"><code>tyval.number().<b>finite()</b></code></a>
+  * <a href="#multiple"><code>tyval.number().<b>multiple()</b></code></a>
+
+- <a href="#array"><code>tyval.<b>array()</b></code></a>
+  * <a href="#maxArray"><code>tyval.array().<b>max()</b></code></a>
+  * <a href="#minArray"><code>tyval.array().<b>min()</b></code></a>
+  * <a href="#lengthArray"><code>tyval.array().<b>length()</b></code></a>
+
+- <a href="#date"><code>tyval.<b>date()</b></code></a>
+
+- <a href="#boolean"><code>tyval.<b>boolean()</b></code></a>
+
+- <a href="#object"><code>tyval.<b>object()</b></code></a>
+
+- <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
+
+<a name="string"></a>
+### tyval.string()
 Checks if the `variable` is a string.
 
-<a name="isNumber"></a>
-#### tyval.isNumber()
-Checks if the `variable` is a number.
-
-<a name="isNull"></a>
-#### tyval.isNull()
-Checks if the `variable` is null.
-
-<a name="isUndefined"></a>
-#### tyval.isUndefined()
-Checks if the `variable` is undefined.
-
-<a name="isBoolean"></a>
-#### tyval.isBoolean()
-Checks if the `variable` is a boolean.
-
-<a name="isObject"></a>
-#### tyval.isObject()
-Checks if the `variable` is an object.
-
-<a name="isArray"></a>
-#### tyval.isArray()
-Checks if the `variable` is an array.
-
-<a name="isFunction"></a>
-#### tyval.isFunction()
-Checks if the `variable` is a function.
-
 <a name="alphanum"></a>
-#### tyval.alphanum()
+#### .string().alphanum()
 Checks if the `variable` is alphanumerical.
 
 <a name="regex"></a>
-#### tyval.regex(regex, flag)
+#### .string().regex(regex)
 Test the regex passed as input on the `variable`.  
-`regex` is the regex code passed as string.  
-`flag` is the regex flag passed as string.
+`regex` is the regex code.  
 
 <a name="maxStr"></a>
-#### tyval.maxStr(number)
+#### .string().max(number)
 Checks if the `variable.length` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minStr"></a>
-#### tyval.minStr(number)
+#### .string().min(number)
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
-<a name="maxArray"></a>
-#### tyval.maxArray(number)
-Checks if the `variable.length` is lower than the passed max value.  
-`number` is the number value to check.
-
-<a name="minArray"></a>
-#### tyval.minArray(number)
-Checks if the `variable.length` is higher than the passed min value.  
-`number` is the number value to check.
+<a name="number"></a>
+### tyval.number()
+Checks if the `variable` is a number.
 
 <a name="maxNum"></a>
-#### tyval.maxNum(number)
+#### .number().max(number)
 Checks if the `variable` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minNum"></a>
-#### tyval.minNum(number)
+#### .number().min(number)
 Checks if the `variable` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="positive"></a>
-#### tyval.positive()
+#### .number().positive()
 Checks if the `variable` is positive.
 
 <a name="negative"></a>
-#### tyval.negative()
+#### .number().negative()
 Checks if the `variable` is negative.
 
 <a name="integer"></a>
-#### tyval.integer()
+#### .number().integer()
 Checks if the `variable` is an integer.
 
 <a name="float"></a>
-#### tyval.float()
+#### .number().float()
 Checks if the `variable` is a float.
 
 <a name="safeInteger"></a>
-#### tyval.safeInteger()
+#### .number().safeInteger()
 Checks if the `variable` is a safeInteger.
 
 <a name="finite"></a>
-#### tyval.finite()
+#### .number().finite()
 Checks if the `variable` is finite.
 
+<a name="multiple"></a>
+#### .number().multiple(number)
+Checks if the `variable` is a multiple of the passed value.  
+`number` is the multiple number value to check.
+
+<a name="array"></a>
+### tyval.array()
+Checks if the `variable` is an array.
+
+<a name="maxArray"></a>
+#### .array().max(number)
+Checks if the `variable.length` is lower than the passed max value.  
+`number` is the number value to check.
+
+<a name="minArray"></a>
+#### .array().min(number)
+Checks if the `variable.length` is higher than the passed min value.  
+`number` is the number value to check.
+
+<a name="lengthArray"></a>
+#### .array().length(number)
+Checks if the `variable.length` is the same as the passed value.  
+`number` is the length number value to check.
+
+<a name="date"></a>
+### tyval.date()
+Checks if the `variable` is a date.
+
+<a name="boolean"></a>
+### tyval.boolean()
+Checks if the `variable` is a boolean.
+
+<a name="object"></a>
+### tyval.object()
+Checks if the `variable` is an object.
+
 <a name="extend"></a>
-#### tyval.extend(function)
-Adds a new function to tyval.  
+### tyval._______.extend(function)
+Adds a new validator to tyval.  
+**Inside the `_______` field you must put the type of validator you need to extend.**  
 You can access the variable to validate via `variable`   
 Use `check = check &&` to elaborate your validation.  
 Usage:
 ```javascript
-tyval.extend(function someName () {
-  this.validators.push(function someName () {
+tyval./*type you need to extend*/.extend(function someName () {
+  tyval./*type you need to extend*/.validators.push(function someName () {
     // your validation code
     check = check && // your boolean validator
   })
@@ -164,44 +172,44 @@ tyval.extend(function someName () {
 ```
 Example:
 ```javascript
-tyval.extend(function isZero () {
-  this.validators.push(function isZero () {
+tyval.number.extend(function isZero () {
+  tyval.number.validators.push(function isZero () {
     check = check && variable === 0
   })
   return this
 })
 // let's use the extended function
-const zero = tyval.isZero().toFunction()
+const zero = tyval.number().isZero().toFunction()
 if (zero(0)) {
   console.log('is equal to zero :D')
 }
 ```
 If you need to pass some `parameter` to the function:
 ```javascript
-tyval.extend(function someName (param) {
-  this.parameters.paramName = param
-  this.validators.push(function someName () {
+tyval./*type you need to extend*/.extend(function someName (param) {
+  tyval./*type you need to extend*/.parameters.paramName = param
+  tyval./*type you need to extend*/.validators.push(function someName () {
     // your validation code
-    // access the parameter via parameters.paramName
-    console.log(parameters.paramName)
+    // access the parameter via paramName
+    console.log(paramName)
     check = check && // your boolean validator
   })
   return this
 })
 ```
-As you can imagine, `variable`, `check` and `parameters` are reserved names of **tyval**.
+As you can imagine, `variable` and `check` are reserved names of **tyval**.
 ```javascript
 // usage example with a parameter
-tyval.extend(function lessThan (num) {
-  this.parameters.lessThanParam = num
-  this.validators.push(function lessThan () {
-    check = check && variable < parameters.lessThanParam
+tyval.number.extend(function lessThan (num) {
+  tyval.number.parameters.lessThanParam = num
+  tyval.number.validators.push(function lessThan () {
+    check = check && variable < lessThanParam
   })
   return this
 })
 // let's use the extended function with a parameter
-const zero = tyval.lessThan(50).toFunction()
-if (lessThan(10)) {
+const ltf = tyval.number().lessThan(50).toFunction()
+if (ltf(10)) {
   console.log('is less than 50!')
 }
 ```
@@ -211,9 +219,12 @@ if (lessThan(10)) {
 - [x] Rewrite API to improve performances
 - [x] Implement tyval.isArray()
 - [x] Implement max/min for array.length
-- [ ] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
+- [x] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
+- [x] Add `Date` validator
 - [ ] Add code coverage
 - [ ] New string validation functions
+- [ ] Browser version
+- [ ] Add `Any` type
 
 ## Contributing
 If you feel you can help in any way, be it with examples, extra testing, or new features please open a pull request or open an issue.
