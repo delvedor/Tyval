@@ -4,46 +4,36 @@ const Benchmark = require('benchmark')
 const suite = Benchmark.Suite()
 
 // Emulates the number test
-// tyval.isNumber().minNum(-5).maxNum(10).integer().finite().safeInteger().toFunction()
+// const numTest = tyval.number().min(-5).max(10).integer().finite().safeInteger().toFunction()
 const numTest = function (number) {
   let bool = true
   bool = bool && typeof number === 'number'
-  if (!bool) return false
   bool = bool && number >= -5
-  if (!bool) return false
   bool = bool && number <= 10
-  if (!bool) return false
   bool = bool && Number.isInteger(number)
-  if (!bool) return false
   bool = bool && Number.isFinite(number)
-  if (!bool) return false
   bool = bool && Number.isSafeInteger(number)
   return bool
 }
 
 // Emulates the string test
-// const strTest = tyval.isString().minStr(5).maxStr(10).alphanum().toFunction()
+// const strTest = tyval.string().min(5).max(10).alphanum().toFunction()
 const strTest = function (string) {
   let bool = true
   bool = bool && typeof string === 'string'
-  if (!bool) return false
   bool = bool && string.length >= 5
-  if (!bool) return false
   bool = bool && string.length <= 10
-  if (!bool) return false
   let reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
   bool = bool && reg.test(string)
   return bool
 }
 
 // Emulates the array test
-// const arrayTest = tyval.isArray().maxArray(10).minArray(2).toFunction()
+// const arrayTest = tyval.array().max(10).min(2).toFunction()
 const arrayTest = function (array) {
   let bool = true
   bool = bool && Array.isArray(array)
-  if (!bool) return false
   bool = bool && array.length <= 10
-  if (!bool) return false
   bool = bool && array.length >= 2
   return bool
 }

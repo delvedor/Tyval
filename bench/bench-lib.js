@@ -4,9 +4,9 @@ const Benchmark = require('benchmark')
 const suite = Benchmark.Suite()
 const tyval = require('../tyval')
 
-const numTest = tyval.isNumber().minNum(-5).maxNum(10).integer().finite().safeInteger().toFunction()
-const strTest = tyval.isString().minStr(5).maxStr(10).alphanum().toFunction()
-const arrayTest = tyval.isArray().maxArray(10).minArray(2).toFunction()
+const numTest = tyval.number().min(-5).max(10).integer().finite().safeInteger().toFunction()
+const strTest = tyval.string().min(5).max(10).alphanum().toFunction()
+const arrayTest = tyval.array().max(10).min(2).toFunction()
 
 suite
   .add('numTest', function () {
