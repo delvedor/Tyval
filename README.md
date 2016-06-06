@@ -23,7 +23,7 @@ if (numberCheck(42)) {
   console.log('The answer')
 }
 ```
-Note that the `.toFunction()` at the end of your validation code is mandatory.
+**Note that the `.toFunction()` at the end of your validation code is mandatory.**
 
 <a name="api"></a>
 ## API
@@ -32,6 +32,8 @@ Note that the `.toFunction()` at the end of your validation code is mandatory.
   * <a href="#regex"><code>tyval.string().<b>regex()</b></code></a>
   * <a href="#maxStr"><code>tyval.string().<b>max()</b></code></a>
   * <a href="#minStr"><code>tyval.string().<b>min()</b></code></a>
+  * <a href="#lengthStr"><code>tyval.string().<b>length()</b></code></a>
+
 
 - <a href="#number"><code>tyval.<b>number()</b></code></a>
   * <a href="#maxNum"><code>tyval.number().<b>max()</b></code></a>
@@ -43,6 +45,7 @@ Note that the `.toFunction()` at the end of your validation code is mandatory.
   * <a href="#safeInteger"><code>tyval.number().<b>safeInteger()</b></code></a>
   * <a href="#finite"><code>tyval.number().<b>finite()</b></code></a>
   * <a href="#multiple"><code>tyval.number().<b>multiple()</b></code></a>
+  * <a href="#notnan"><code>tyval.number().<b>notNaN()</b></code></a>
 
 - <a href="#array"><code>tyval.<b>array()</b></code></a>
   * <a href="#maxArray"><code>tyval.array().<b>max()</b></code></a>
@@ -50,10 +53,13 @@ Note that the `.toFunction()` at the end of your validation code is mandatory.
   * <a href="#lengthArray"><code>tyval.array().<b>length()</b></code></a>
 
 - <a href="#date"><code>tyval.<b>date()</b></code></a>
+  * <a href="#dateLower"><code>tyval.date().<b>lower()</b></code></a>
+  * <a href="#dateHigher"><code>tyval.date().<b>higher()</b></code></a>
 
 - <a href="#boolean"><code>tyval.<b>boolean()</b></code></a>
 
 - <a href="#object"><code>tyval.<b>object()</b></code></a>
+  * <a href="#emptyObject"><code>tyval.object().<b>empty()</b></code></a>
 
 - <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
 
@@ -79,6 +85,12 @@ Checks if the `variable.length` is lower than the passed max value.
 #### .string().min(number)
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
+
+<a name="lengthStr"></a>
+#### .string().length(number)
+Checks if the `variable.length` is equal than the passed value.
+`number` is the number value to check.
+
 
 <a name="number"></a>
 ### tyval.number()
@@ -123,6 +135,11 @@ Checks if the `variable` is finite.
 Checks if the `variable` is a multiple of the passed value.  
 `number` is the multiple number value to check.
 
+<a name="notnan"></a>
+#### .number().notNaN()
+Checks if the `variable` is not a NaN.
+
+
 <a name="array"></a>
 ### tyval.array()
 Checks if the `variable` is an array.
@@ -146,6 +163,16 @@ Checks if the `variable.length` is the same as the passed value.
 ### tyval.date()
 Checks if the `variable` is a date.
 
+<a name="dateLower"></a>
+#### .date().lower(date)
+Checks if the `variable.getTime()` is lower than the passed value.  
+`date` is the date object to compare
+
+<a name="dateHigher"></a>
+#### .date().higher(date)
+Checks if the `variable.getTime()` is higher than the passed value.  
+`date` is the date object to compare
+
 <a name="boolean"></a>
 ### tyval.boolean()
 Checks if the `variable` is a boolean.
@@ -153,6 +180,10 @@ Checks if the `variable` is a boolean.
 <a name="object"></a>
 ### tyval.object()
 Checks if the `variable` is an object.
+
+<a name="emptyObject"></a>
+#### .object().empty()
+Checks if the `variable` object is empty.
 
 <a name="extend"></a>
 ### tyval._______.extend(function)
@@ -217,10 +248,12 @@ if (ltf(10)) {
 
 ## TODO
 - [x] Rewrite API to improve performances
-- [x] Implement tyval.isArray()
+- [x] Implement tyval.array()
 - [x] Implement max/min for array.length
 - [x] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
 - [x] Add `Date` validator
+- [x] Split test in multiple files
+- [ ] In toFunction, move function parameters inside function blocks to avoid naming conflicts
 - [ ] Add code coverage
 - [ ] New string validation functions
 - [ ] Browser version

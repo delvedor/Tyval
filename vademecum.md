@@ -51,7 +51,6 @@ estraverse.traverse(ast, {
 })
 ```
 and finally via [escodegen](https://github.com/estools/escodegen) appends the code to *functionCode*; it preserves the curly braces for making a scope for every validation, in this way we avoid naming conflict.  
-It adds by default an `if (!check)`, in this way if one test fails, the function terminates immediately.
 ```javascript
 functionCode += escodegen.generate(block) + ';\n'
 ```
