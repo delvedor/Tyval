@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.3.0
+- Added *date.lower* and *date.higher* validators
+- Added *object.empty* validator
+- Added *string.length* validator
+- Added *number.notNaN* validator
+- Splitted test in multiple files
+
 ## v2.2.0
 - Splitted code by type inside lib/ folder
 - Changed *extend* implementation
