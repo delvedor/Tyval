@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.4.0
+- Added *object.notNull*, *object.notArray*, *object.notDate*, *object.notRegExp*, *object.has* and *object.hasNot*
+- Added *array.contains*
+- More testing
+- More benchmark
+
 ## v2.3.0
 - Added *date.lower* and *date.higher* validators
 - Added *object.empty* validator
