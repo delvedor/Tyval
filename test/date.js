@@ -1,6 +1,7 @@
 'use strict'
 
-const test = require('ava')
+const tap = require('tap')
+const test = tap.test
 const tyval = require('../tyval')
 
 test('date', (t) => {

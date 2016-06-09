@@ -38,6 +38,32 @@ const arrayTest = function (array) {
   return bool
 }
 
+// Emulates the object test
+// const objTest = tyval.object().notNull().notArray().notDate().notRegExp().toFunction()
+const objTest = function (obj) {
+  let bool = true
+  bool = bool && typeof obj === 'object'
+  bool = bool && obj !== null
+  bool = bool && !Array.isArray(obj)
+  bool = bool && !(obj instanceof Date)
+  bool = bool && !(obj instanceof RegExp)
+  return bool
+}
+
+const objHas = function (obj) {
+  let bool = true
+  bool = bool && typeof obj === 'object'
+  bool = bool && obj.hasOwnProperty('test')
+  bool = bool && obj.hasOwnProperty('bench')
+  bool = bool && !obj.hasOwnProperty('nope')
+  return bool
+}
+
+let objToTest = {
+  test: 'test42',
+  bench: 5
+}
+
 suite
   .add('numTest', function () {
     if (numTest(5)) noop()
@@ -57,7 +83,21 @@ suite
   .add('arrayTest-false', function () {
     if (arrayTest([1])) noop()
   })
-
+  .add('objTest', function () {
+    if (objTest({})) noop()
+  })
+  .add('objTest-false', function () {
+    if (objTest([])) noop()
+  })
+  .add('objHas', function () {
+    if (objHas({test: 1, bench: 2})) noop()
+  })
+  .add('objHas-false', function () {
+    if (objHas({test: 1, bench: 2, nope: 3})) noop()
+  })
+  .add('combined obj and str', function () {
+    if (objHas(objToTest) && strTest(objToTest.test) && numTest(objToTest.bench)) noop()
+  })
   .on('cycle', function (event) {
     console.log(String(event.target))
   })

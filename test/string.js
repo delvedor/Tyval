@@ -1,8 +1,7 @@
 'use strict'
-/* globals check, variable */
-/* eslint-disable no-native-reassign, no-extend-native, no-new-func */
 
-const test = require('ava')
+const tap = require('tap')
+const test = tap.test
 const tyval = require('../tyval')
 
 test('string', (t) => {
@@ -14,7 +13,7 @@ test('string', (t) => {
   t.false(str(1))
 })
 
-test('alphanum', (t) => {
+test('string.alphanum', (t) => {
   t.plan(5)
   t.is(typeof tyval.string.alphanum, 'function')
   let alp = tyval.string().alphanum().toFunction()
@@ -24,7 +23,7 @@ test('alphanum', (t) => {
   t.false(alp('123'))
 })
 
-test('regex', (t) => {
+test('string.regex', (t) => {
   t.plan(5)
   t.is(typeof tyval.string.regex, 'function')
   let regex = tyval.string().regex(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i).toFunction()
@@ -34,7 +33,7 @@ test('regex', (t) => {
   t.false(regex('123'))
 })
 
-test('maxStr', (t) => {
+test('string.max', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.max, 'function')
   let max = tyval.string().max(10).toFunction()
@@ -43,7 +42,7 @@ test('maxStr', (t) => {
   t.false(max('testtesttest'))
 })
 
-test('minStr', (t) => {
+test('string.min', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.min, 'function')
   let min = tyval.string().min(3).toFunction()
@@ -52,7 +51,7 @@ test('minStr', (t) => {
   t.false(min('no'))
 })
 
-test('lengthString', (t) => {
+test('string.length', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.length, 'function')
   let len = tyval.string().length(4).toFunction()
@@ -71,10 +70,11 @@ test('strTest', (t) => {
   t.false(strTest(123))
 })
 
+/* eslint-disable no-undef */
 test('string.extend', (t) => {
   t.plan(4)
   tyval.string.extend(function empty () {
-    tyval.string.validators.push(function empty () {
+    this.validators.push(function empty () {
       check = check && variable.length === 0
     })
     return this
@@ -85,3 +85,4 @@ test('string.extend', (t) => {
   t.true(empty(''))
   t.false(empty('.'))
 })
+/* eslint-disable no-undef */

@@ -1,8 +1,7 @@
 'use strict'
-/* globals check, variable */
-/* eslint-disable no-native-reassign, no-extend-native, no-new-func */
 
-const test = require('ava')
+const tap = require('tap')
+const test = tap.test
 const tyval = require('../tyval')
 
 test('array', (t) => {
@@ -14,7 +13,7 @@ test('array', (t) => {
   t.false(arr('test'))
 })
 
-test('maxArray', (t) => {
+test('array.max', (t) => {
   t.plan(4)
   t.is(typeof tyval.array.max, 'function')
   let max = tyval.array().max(10).toFunction()
@@ -23,7 +22,7 @@ test('maxArray', (t) => {
   t.false(max([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]))
 })
 
-test('minArray', (t) => {
+test('array.min', (t) => {
   t.plan(4)
   t.is(typeof tyval.array.min, 'function')
   let min = tyval.array().min(3).toFunction()
@@ -32,7 +31,7 @@ test('minArray', (t) => {
   t.false(min([]))
 })
 
-test('lengthArray', (t) => {
+test('array.length', (t) => {
   t.plan(4)
   t.is(typeof tyval.array.length, 'function')
   let len = tyval.array().length(3).toFunction()
@@ -50,10 +49,11 @@ test('arrayTest', (t) => {
   t.false(arrayTest({}))
 })
 
+/* eslint-disable no-undef */
 test('array.extend', (t) => {
   t.plan(4)
   tyval.array.extend(function empty () {
-    tyval.array.validators.push(function empty () {
+    this.validators.push(function empty () {
       check = check && variable.length === 0
     })
     return this
@@ -63,5 +63,15 @@ test('array.extend', (t) => {
   t.is(typeof empty, 'function')
   t.true(empty([]))
   t.false(empty([1]))
+})
+/* eslint-disable no-undef */
+
+test('array.contains', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.array.contains, 'function')
+  let contains = tyval.array().contains(3).toFunction()
+  t.is(typeof contains, 'function')
+  t.true(contains([1, 2, 3]))
+  t.false(contains([1, 2]))
 })
 

@@ -1,8 +1,7 @@
 'use strict'
-/* globals check, variable */
-/* eslint-disable no-native-reassign, no-extend-native, no-new-func */
 
-const test = require('ava')
+const tap = require('tap')
+const test = tap.test
 const tyval = require('../tyval')
 
 test('number', (t) => {
@@ -14,7 +13,7 @@ test('number', (t) => {
   t.false(num('test'))
 })
 
-test('maxNum', (t) => {
+test('number.max', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.max, 'function')
   let max = tyval.number().max(10).toFunction()
@@ -23,7 +22,7 @@ test('maxNum', (t) => {
   t.false(max(15))
 })
 
-test('minNum', (t) => {
+test('number.min', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.min, 'function')
   let min = tyval.number().min(4).toFunction()
@@ -32,7 +31,7 @@ test('minNum', (t) => {
   t.false(min(3))
 })
 
-test('positive', (t) => {
+test('number.positive', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.positive, 'function')
   let pos = tyval.number().positive().toFunction()
@@ -41,7 +40,7 @@ test('positive', (t) => {
   t.false(pos(-5))
 })
 
-test('negative', (t) => {
+test('number.negative', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.negative, 'function')
   let neg = tyval.number().negative().toFunction()
@@ -50,7 +49,7 @@ test('negative', (t) => {
   t.false(neg(5))
 })
 
-test('integer', (t) => {
+test('number.integer', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.integer, 'function')
   let int = tyval.number().integer().toFunction()
@@ -59,7 +58,7 @@ test('integer', (t) => {
   t.false(int(1.1))
 })
 
-test('float', (t) => {
+test('number.float', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.float, 'function')
   let float = tyval.number().float().toFunction()
@@ -68,7 +67,7 @@ test('float', (t) => {
   t.false(float(1))
 })
 
-test('safeInteger', (t) => {
+test('number.safeInteger', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.safeInteger, 'function')
   let safe = tyval.number().safeInteger().toFunction()
@@ -77,7 +76,7 @@ test('safeInteger', (t) => {
   t.false(safe(Number.MAX_SAFE_INTEGER + 1))
 })
 
-test('finite', (t) => {
+test('number.finite', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.finite, 'function')
   let fin = tyval.number().finite().toFunction()
@@ -86,7 +85,7 @@ test('finite', (t) => {
   t.false(fin(Number.POSITIVE_INFINITY))
 })
 
-test('multiple', (t) => {
+test('number.multiple', (t) => {
   t.plan(4)
   t.is(typeof tyval.number.multiple, 'function')
   let mul2 = tyval.number().multiple(2).toFunction()
@@ -96,18 +95,20 @@ test('multiple', (t) => {
 })
 
 test('numTest', (t) => {
-  t.plan(4)
+  t.plan(5)
   let numTest = tyval.number().min(-5).max(10).integer().finite().safeInteger().toFunction()
   t.is(typeof numTest, 'function')
   t.true(numTest(5))
   t.false(numTest(15))
   t.false(numTest('15'))
+  t.false(numTest(NaN))
 })
 
+/* eslint-disable no-undef */
 test('number.extend', (t) => {
   t.plan(4)
   tyval.number.extend(function isZero () {
-    tyval.number.validators.push(function isZero () {
+    this.validators.push(function isZero () {
       check = check && variable === 0
     })
     return this
@@ -118,6 +119,7 @@ test('number.extend', (t) => {
   t.true(zero(0))
   t.false(zero(1))
 })
+/* eslint-disable no-undef */
 
 test('number.notNaN', (t) => {
   t.plan(4)
