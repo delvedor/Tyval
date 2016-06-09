@@ -1,7 +1,13 @@
 # Tyval
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval)
 
-Tyval is an extensible type validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of [fast](https://github.com/delvedor/Tyval/tree/master/bench) and useful validation functions, with a self-descriptive name.
+Tyval is an extensible type validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of [fast](https://github.com/delvedor/Tyval/tree/master/bench) and useful validation functions, with a self-descriptive name.  
+The design of the API forces to write atomic test, in this way the result of a single test does not influence the others.
+
+
+If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing an amazing job.  
+Tyval has only one purpose, validate small and focused variables in the fastest way possible.  
+Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
 
 ## Install
 ```
@@ -51,6 +57,7 @@ if (numberCheck(42)) {
   * <a href="#maxArray"><code>tyval.array().<b>max()</b></code></a>
   * <a href="#minArray"><code>tyval.array().<b>min()</b></code></a>
   * <a href="#lengthArray"><code>tyval.array().<b>length()</b></code></a>
+  * <a href="#containsArray"><code>tyval.array().<b>contains()</b></code></a>
 
 - <a href="#date"><code>tyval.<b>date()</b></code></a>
   * <a href="#dateLower"><code>tyval.date().<b>lower()</b></code></a>
@@ -60,133 +67,175 @@ if (numberCheck(42)) {
 
 - <a href="#object"><code>tyval.<b>object()</b></code></a>
   * <a href="#emptyObject"><code>tyval.object().<b>empty()</b></code></a>
+  * <a href="#notNullObject"><code>tyval.object().<b>notNull()</b></code></a>
+  * <a href="#notArrayObject"><code>tyval.object().<b>notArray()</b></code></a>
+  * <a href="#notDateObject"><code>tyval.object().<b>notDate()</b></code></a>
+  * <a href="#notRegExpObject"><code>tyval.object().<b>notRegExp()</b></code></a>
+  * <a href="#hasObject"><code>tyval.object().<b>has()</b></code></a>
+  * <a href="#hasNotObject"><code>tyval.object().<b>hasNot()</b></code></a>
 
 - <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
 
 <a name="string"></a>
-### tyval.string()
+### tyval**.string()**
 Checks if the `variable` is a string.
 
 <a name="alphanum"></a>
-#### .string().alphanum()
+#### .string()**.alphanum()**
 Checks if the `variable` is alphanumerical.
 
 <a name="regex"></a>
-#### .string().regex(regex)
+#### .string()**.regex(regex)**
 Test the regex passed as input on the `variable`.  
 `regex` is the regex code.  
 
 <a name="maxStr"></a>
-#### .string().max(number)
+#### .string()**.max(number)**
 Checks if the `variable.length` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minStr"></a>
-#### .string().min(number)
+#### .string()**.min(number)**
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="lengthStr"></a>
-#### .string().length(number)
-Checks if the `variable.length` is equal than the passed value.
+#### .string()**.length(number)**
+Checks if the `variable.length` is equal than the passed value.  
 `number` is the number value to check.
 
 
 <a name="number"></a>
-### tyval.number()
+### tyval**.number()**
 Checks if the `variable` is a number.
 
 <a name="maxNum"></a>
-#### .number().max(number)
+#### .number()**.max(number)**
 Checks if the `variable` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minNum"></a>
-#### .number().min(number)
+#### .number()**.min(number)**
 Checks if the `variable` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="positive"></a>
-#### .number().positive()
+#### .number()**.positive()**
 Checks if the `variable` is positive.
 
 <a name="negative"></a>
-#### .number().negative()
+#### .number()**.negative()**
 Checks if the `variable` is negative.
 
 <a name="integer"></a>
-#### .number().integer()
+#### .number()**.integer()**
 Checks if the `variable` is an integer.
 
 <a name="float"></a>
-#### .number().float()
+#### .number()**.float()**
 Checks if the `variable` is a float.
 
 <a name="safeInteger"></a>
-#### .number().safeInteger()
+#### .number()**.safeInteger()**
 Checks if the `variable` is a safeInteger.
 
 <a name="finite"></a>
-#### .number().finite()
+#### .number()**.finite()**
 Checks if the `variable` is finite.
 
 <a name="multiple"></a>
-#### .number().multiple(number)
+#### .number()**.multiple(number)**
 Checks if the `variable` is a multiple of the passed value.  
 `number` is the multiple number value to check.
 
 <a name="notnan"></a>
-#### .number().notNaN()
+#### .number()**.notNaN()**
 Checks if the `variable` is not a NaN.
 
 
 <a name="array"></a>
-### tyval.array()
+### tyval**.array()**
 Checks if the `variable` is an array.
 
 <a name="maxArray"></a>
-#### .array().max(number)
+#### .array()**.max(number)**
 Checks if the `variable.length` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minArray"></a>
-#### .array().min(number)
+#### .array()**.min(number)**
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="lengthArray"></a>
-#### .array().length(number)
+#### .array()**.length(number)**
 Checks if the `variable.length` is the same as the passed value.  
 `number` is the length number value to check.
 
+<a name="containsArray"></a>
+#### .array()**.contains(value)**
+Checks if the array `variable` contains the passed value
+
+
 <a name="date"></a>
-### tyval.date()
+### tyval**.date()**
 Checks if the `variable` is a date.
 
 <a name="dateLower"></a>
-#### .date().lower(date)
+#### .date()**.lower(date)**
 Checks if the `variable.getTime()` is lower than the passed value.  
 `date` is the date object to compare
 
 <a name="dateHigher"></a>
-#### .date().higher(date)
+#### .date()**.higher(date)**
 Checks if the `variable.getTime()` is higher than the passed value.  
 `date` is the date object to compare
 
 <a name="boolean"></a>
-### tyval.boolean()
+### tyval**.boolean()**
 Checks if the `variable` is a boolean.
 
 <a name="object"></a>
-### tyval.object()
+### tyval**.object()**
 Checks if the `variable` is an object.
 
 <a name="emptyObject"></a>
-#### .object().empty()
+#### .object()**.empty()**
 Checks if the `variable` object is empty.
 
+<a name="notNullObject"></a>
+#### .object()**.notNull()**
+Checks if the `variable` object is not null.  
+This because typeof null = 'object'
+
+<a name="notArrayObject"></a>
+#### .object()**.notArray()**
+Checks if the `variable` object is not an array.  
+This because typeof [] = 'object'
+
+<a name="notDateObject"></a>
+#### .object()**.notDate()**
+Checks if the `variable` object is not a date.  
+This because typeof new Date() = 'object'
+
+<a name="notRegExpObject"></a>
+#### .object()**.notRegExp()**
+Checks if the `variable` object is not a RegExp.  
+This because typeof new RegExp() = 'object'
+
+<a name="hasObject"></a>
+#### .object()**.has(key, fast)**
+Checks if the `variable` object has the key passed as string.  
+If `fast`is *true* the overall performances gets ~10x speed, but the test fails if the key value exist and is equal to *undefined*.
+
+<a name="hasNotObject"></a>
+#### .object()**.hasNot(key, fast)**
+Checks if the `variable` object has not the key passed as string.  
+If `fast`is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*.
+
+
 <a name="extend"></a>
-### tyval._______.extend(function)
+### tyval._______**.extend(function)**
 Adds a new validator to tyval.  
 **Inside the `_______` field you must put the type of validator you need to extend.**  
 You can access the variable to validate via `variable`   
@@ -194,7 +243,7 @@ Use `check = check &&` to elaborate your validation.
 Usage:
 ```javascript
 tyval./*type you need to extend*/.extend(function someName () {
-  tyval./*type you need to extend*/.validators.push(function someName () {
+  this.validators.push(function someName () {
     // your validation code
     check = check && // your boolean validator
   })
@@ -204,7 +253,7 @@ tyval./*type you need to extend*/.extend(function someName () {
 Example:
 ```javascript
 tyval.number.extend(function isZero () {
-  tyval.number.validators.push(function isZero () {
+  this.validators.push(function isZero () {
     check = check && variable === 0
   })
   return this
@@ -218,8 +267,8 @@ if (zero(0)) {
 If you need to pass some `parameter` to the function:
 ```javascript
 tyval./*type you need to extend*/.extend(function someName (param) {
-  tyval./*type you need to extend*/.parameters.paramName = param
-  tyval./*type you need to extend*/.validators.push(function someName () {
+  this.parameters.paramName = param
+  this.validators.push(function someName () {
     // your validation code
     // access the parameter via paramName
     console.log(paramName)
@@ -232,8 +281,8 @@ As you can imagine, `variable` and `check` are reserved names of **tyval**.
 ```javascript
 // usage example with a parameter
 tyval.number.extend(function lessThan (num) {
-  tyval.number.parameters.lessThanParam = num
-  tyval.number.validators.push(function lessThan () {
+  this.parameters.lessThanParam = num
+  this.validators.push(function lessThan () {
     check = check && variable < lessThanParam
   })
   return this
@@ -253,8 +302,8 @@ if (ltf(10)) {
 - [x] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
 - [x] Add `Date` validator
 - [x] Split test in multiple files
+- [ ] Improve lib code readability
 - [ ] In toFunction, move function parameters inside function blocks to avoid naming conflicts
-- [ ] Add code coverage
 - [ ] New string validation functions
 - [ ] Browser version
 - [ ] Add `Any` type
