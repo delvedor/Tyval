@@ -129,3 +129,17 @@ test('number.notNaN', (t) => {
   t.true(n(1))
   t.false(n(NaN))
 })
+
+test('number.port', (t) => {
+  t.plan(8)
+  t.is(typeof tyval.number.port, 'function')
+  let port = tyval.number().port().toFunction()
+  let portReserved = tyval.number().port(true).toFunction()
+  t.is(typeof port, 'function')
+  t.is(typeof portReserved, 'function')
+  t.true(port(1024))
+  t.false(port(-10))
+  t.false(port(70000))
+  t.true(portReserved(1025))
+  t.false(portReserved(1000))
+})
