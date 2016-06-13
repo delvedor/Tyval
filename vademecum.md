@@ -9,11 +9,11 @@ To achieve this two goals the lib adopted few decisions and technical implementa
 Below you will find all the main parts of the code and their explanation.
 
 ### **toFunction** method
-This method is the core of the library, its purpose is to take all the validation function and merge them into a single function.  
+This method is the core of the library, its purpose is to take all the validation function and merge them into a single function via code generation.  
 Before starting with the explanation let me introduce the main parameters that we are gonna to use.
-- `validators`, an array with all the validation function, every function of tyval pushes a function into this array when is called, in this way when toFunction is called, it knows which function it has to merge together.  
-- `functionCode`, who is a string with all the function code.  
-- `parameters` is an object with all the parameters passed to the validation function.
+- `validators`, an array with all the validation function, every time you call a validator function, Tyval pushes the function's code inside this array, in this way when toFunction is called, it knows which function it has to merge together.  
+- `functionCode`, is the string with all the function code.  
+- `parameters` is an object with all the parameters passed to the validation functions.
 
 Ok, now we can start:  
 First, *toFunction* declare the first part of *functionCode*:
@@ -22,37 +22,35 @@ First, *toFunction* declare the first part of *functionCode*:
 - Declaration of all the passed parameters.
 
 ```javascript
+// function code
 let functionCode = '"use strict";\nlet check = true;\n'
 // Adds variables to functionCode
 for (let val in parameters) {
+  // If the variable is a string we add the double quote
   if (typeof parameters[val] === 'string') {
-    functionCode += 'let ' + val + ' = "' + parameters[val] + '";\n'
+    functionCode += `let ${val} = "${parameters[val]}";\n`
+  // If the variable is an object (but not an instance of RegExp) we stringify it
   } else if (typeof parameters[val] === 'object' && !(parameters[val] instanceof RegExp)) {
-    functionCode += 'let ' + val + ' = ' + JSON.stringify(parameters[val]) + ';\n'
+    functionCode += `let ${val} = ${JSON.stringify(parameters[val])};\n`
+  // In all the other cases we add it 'as is' to the code
   } else {
-    functionCode += 'let ' + val + ' = ' + parameters[val] + ';\n'
+    functionCode += `let ${val} = ${parameters[val]};\n`
   }
 }
 ```
 
-*toFunction()* iterates over the validators array and generates an *AST* (Abstract Syntax Tree) for every function via [esprima](http://esprima.org/),
+*toFunction()* iterates over the validators array and stringify the validation function code, removes the function declaration part, then it adds the code to `functionCode`.  
+See the code below for more info about this.
 ```javascript
-ast = esprima.parse(code.toString(), {})
-```
-then it removes the function declaration via [estraverse](https://github.com/estools/estraverse)
-```javascript
-estraverse.traverse(ast, {
-  enter: function (node, parent) {
-    if (node.type === 'BlockStatement') {
-      block = node
-      this.break()
-    }
-  }
+validators.forEach((code) => {
+  // Stringify the validator function code
+  code = code.toString()
+  // Here we remove the function declaration,
+  // this works ONLY if there are not destructuring assignment as parameters.
+  // Because of the lib design the validator function has never parameters,
+  // so we can be "safe" about the following implementation.
+  functionCode += code.substring(code.indexOf('{')) + ';\n'
 })
-```
-and finally via [escodegen](https://github.com/estools/escodegen) appends the code to *functionCode*; it preserves the curly braces for making a scope for every validation, in this way we avoid naming conflict.  
-```javascript
-functionCode += escodegen.generate(block) + ';\n'
 ```
 When *toFunction* terminates the code merge, it appends the *return block* and generates the final function via the `new Function()` constructor.
 ```javascript
@@ -66,7 +64,7 @@ const strTest = tyval.string().min(5).max(10).alphanum().toFunction()
 ```
 generates:
 ```javascript
-function () {
+function (variable) {
   "use strict";
   let check = true;
   let min = 5;
@@ -91,5 +89,5 @@ function () {
 Tyval uses the *validators* function array because of how works *toFunction*, it's useful for make easier generate the final function code.
 
 ### **parameters** object
-In tyval we use the *parameters* object, because as far as I know there's no other way *(if I'm wrong, let me know)* to pass the parameter inside the final function.  
+In Tyval we use the *parameters* object, because as far as I know there's no other way *(if I'm wrong, let me know)* to pass the parameter inside the final function.  
 In every function you'll append a parameter with a self-descriptive name and the value that you need inside you validation function.

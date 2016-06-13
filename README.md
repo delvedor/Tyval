@@ -6,7 +6,7 @@ The design of the API forces to write atomic test, in this way the result of a s
 
 
 If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing an amazing job.  
-Tyval has only one purpose, validate small and focused variables in the fastest way possible.  
+Tyval has only one purpose, validate small and focused variables in the fastest way possible via code generation.  
 Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
 
 ## Install
@@ -39,6 +39,9 @@ if (numberCheck(42)) {
   * <a href="#maxStr"><code>tyval.string().<b>max()</b></code></a>
   * <a href="#minStr"><code>tyval.string().<b>min()</b></code></a>
   * <a href="#lengthStr"><code>tyval.string().<b>length()</b></code></a>
+  * <a href="#mailStr"><code>tyval.string().<b>mail()</b></code></a>
+  * <a href="#ipv4Str"><code>tyval.string().<b>ipv4()</b></code></a>
+  * <a href="#ipv6Str"><code>tyval.string().<b>ipv6()</b></code></a>
 
 
 - <a href="#number"><code>tyval.<b>number()</b></code></a>
@@ -52,6 +55,7 @@ if (numberCheck(42)) {
   * <a href="#finite"><code>tyval.number().<b>finite()</b></code></a>
   * <a href="#multiple"><code>tyval.number().<b>multiple()</b></code></a>
   * <a href="#notnan"><code>tyval.number().<b>notNaN()</b></code></a>
+  * <a href="#portNumber"><code>tyval.number().<b>port()</b></code></a>
 
 - <a href="#array"><code>tyval.<b>array()</b></code></a>
   * <a href="#maxArray"><code>tyval.array().<b>max()</b></code></a>
@@ -77,165 +81,182 @@ if (numberCheck(42)) {
 - <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
 
 <a name="string"></a>
-### tyval**.string()**
+### tyval.string()
 Checks if the `variable` is a string.
 
 <a name="alphanum"></a>
-#### .string()**.alphanum()**
+#### .string().alphanum()
 Checks if the `variable` is alphanumerical.
 
 <a name="regex"></a>
-#### .string()**.regex(regex)**
+#### .string().regex(regex)
 Test the regex passed as input on the `variable`.  
 `regex` is the regex code.  
 
 <a name="maxStr"></a>
-#### .string()**.max(number)**
+#### .string().max(number)
 Checks if the `variable.length` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minStr"></a>
-#### .string()**.min(number)**
+#### .string().min(number)
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="lengthStr"></a>
-#### .string()**.length(number)**
+#### .string().length(number)
 Checks if the `variable.length` is equal than the passed value.  
 `number` is the number value to check.
 
+<a name="mailStr"></a>
+#### .string().mail()
+Checks if the `variable` is a valid mail string.
+
+<a name="ipv4Str"></a>
+#### .string().ipv4()
+Checks if the `variable` is a valid ipv4 string.
+
+<a name="ipv6Str"></a>
+#### .string().ipv6()
+Checks if the `variable` is a valid ipv6 string.
+
 
 <a name="number"></a>
-### tyval**.number()**
+### tyval.number()
 Checks if the `variable` is a number.
 
 <a name="maxNum"></a>
-#### .number()**.max(number)**
+#### .number().max(number)
 Checks if the `variable` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minNum"></a>
-#### .number()**.min(number)**
+#### .number().min(number)
 Checks if the `variable` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="positive"></a>
-#### .number()**.positive()**
+#### .number().positive()
 Checks if the `variable` is positive.
 
 <a name="negative"></a>
-#### .number()**.negative()**
+#### .number().negative()
 Checks if the `variable` is negative.
 
 <a name="integer"></a>
-#### .number()**.integer()**
+#### .number().integer()
 Checks if the `variable` is an integer.
 
 <a name="float"></a>
-#### .number()**.float()**
+#### .number().float()
 Checks if the `variable` is a float.
 
 <a name="safeInteger"></a>
-#### .number()**.safeInteger()**
+#### .number().safeInteger()
 Checks if the `variable` is a safeInteger.
 
 <a name="finite"></a>
-#### .number()**.finite()**
+#### .number().finite()
 Checks if the `variable` is finite.
 
 <a name="multiple"></a>
-#### .number()**.multiple(number)**
+#### .number().multiple(number)
 Checks if the `variable` is a multiple of the passed value.  
 `number` is the multiple number value to check.
 
 <a name="notnan"></a>
-#### .number()**.notNaN()**
+#### .number().notNaN()
 Checks if the `variable` is not a NaN.
+
+<a name="portNumber"></a>
+#### .number().port(reserved)
+Checks if the `variable` is a valid network port number.  
+If `reserved` is equal to true, the test returns false if the port number is lower than 1024.
 
 
 <a name="array"></a>
-### tyval**.array()**
+### tyval.array()
 Checks if the `variable` is an array.
 
 <a name="maxArray"></a>
-#### .array()**.max(number)**
+#### .array().max(number)
 Checks if the `variable.length` is lower than the passed max value.  
 `number` is the number value to check.
 
 <a name="minArray"></a>
-#### .array()**.min(number)**
+#### .array().min(number)
 Checks if the `variable.length` is higher than the passed min value.  
 `number` is the number value to check.
 
 <a name="lengthArray"></a>
-#### .array()**.length(number)**
+#### .array().length(number)
 Checks if the `variable.length` is the same as the passed value.  
 `number` is the length number value to check.
 
 <a name="containsArray"></a>
-#### .array()**.contains(value)**
+#### .array().contains(value)
 Checks if the array `variable` contains the passed value
 
 
 <a name="date"></a>
-### tyval**.date()**
+### tyval.date()
 Checks if the `variable` is a date.
 
 <a name="dateLower"></a>
-#### .date()**.lower(date)**
+#### .date().lower(date)
 Checks if the `variable.getTime()` is lower than the passed value.  
 `date` is the date object to compare
 
 <a name="dateHigher"></a>
-#### .date()**.higher(date)**
+#### .date().higher(date)
 Checks if the `variable.getTime()` is higher than the passed value.  
 `date` is the date object to compare
 
 <a name="boolean"></a>
-### tyval**.boolean()**
+### tyval.boolean()
 Checks if the `variable` is a boolean.
 
 <a name="object"></a>
-### tyval**.object()**
+### tyval.object()
 Checks if the `variable` is an object.
 
 <a name="emptyObject"></a>
-#### .object()**.empty()**
+#### .object().empty()
 Checks if the `variable` object is empty.
 
 <a name="notNullObject"></a>
-#### .object()**.notNull()**
+#### .object().notNull()
 Checks if the `variable` object is not null.  
 This because typeof null = 'object'
 
 <a name="notArrayObject"></a>
-#### .object()**.notArray()**
+#### .object().notArray()
 Checks if the `variable` object is not an array.  
 This because typeof [] = 'object'
 
 <a name="notDateObject"></a>
-#### .object()**.notDate()**
+#### .object().notDate()
 Checks if the `variable` object is not a date.  
 This because typeof new Date() = 'object'
 
 <a name="notRegExpObject"></a>
-#### .object()**.notRegExp()**
+#### .object().notRegExp()
 Checks if the `variable` object is not a RegExp.  
 This because typeof new RegExp() = 'object'
 
 <a name="hasObject"></a>
-#### .object()**.has(key, fast)**
+#### .object().has(key, fast)
 Checks if the `variable` object has the key passed as string.  
 If `fast`is *true* the overall performances gets ~10x speed, but the test fails if the key value exist and is equal to *undefined*.
 
 <a name="hasNotObject"></a>
-#### .object()**.hasNot(key, fast)**
+#### .object().hasNot(key, fast)
 Checks if the `variable` object has not the key passed as string.  
 If `fast`is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*.
 
 
 <a name="extend"></a>
-### tyval._______**.extend(function)**
+### tyval._______**.extend(function)
 Adds a new validator to tyval.  
 **Inside the `_______` field you must put the type of validator you need to extend.**  
 You can access the variable to validate via `variable`   
@@ -277,7 +298,7 @@ tyval./*type you need to extend*/.extend(function someName (param) {
   return this
 })
 ```
-As you can imagine, `variable` and `check` are reserved names of **tyval**.
+As you can imagine, `variable` and `check` are reserved names of **Tyval**, see [here](https://github.com/delvedor/Tyval/blob/master/vademecum.md) why.
 ```javascript
 // usage example with a parameter
 tyval.number.extend(function lessThan (num) {
@@ -302,9 +323,9 @@ if (ltf(10)) {
 - [x] Refactor of the tyval object, divide functions by field (string, number, array, object...) for a better maintainability
 - [x] Add `Date` validator
 - [x] Split test in multiple files
+- [x] New string validation functions
 - [ ] Improve lib code readability
 - [ ] In toFunction, move function parameters inside function blocks to avoid naming conflicts
-- [ ] New string validation functions
 - [ ] Browser version
 - [ ] Add `Any` type
 
