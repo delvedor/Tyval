@@ -1,9 +1,16 @@
 # Changelog
 
+## v2.5.0
+- Added *string.mail*, *string.ipv4*, *string.ipv6*
+- Added *number.port*
+- Refactored toFunction
+- Removed esprima/estraverse/escodegen dependencies
+
 ## v2.4.0
 - Added *object.notNull*, *object.notArray*, *object.notDate*, *object.notRegExp*, *object.has* and *object.hasNot*
 - Added *array.contains*
 - More testing
+- Moved from ava to tap for testing
 - More benchmark
 
 ## v2.3.0
