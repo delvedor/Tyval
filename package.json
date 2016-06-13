@@ -32,9 +32,5 @@
     "standard": "^7.1.1",
     "tap": "^5.7.2"
   },
-  "dependencies": {
-    "escodegen": "^1.8.0",
-    "esprima": "^2.7.2",
-    "estraverse": "^4.2.0"
-  }
+  "dependencies": {}
 }
