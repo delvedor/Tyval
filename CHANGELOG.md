@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.6.0
+- Added Browser version
+
 ## v2.5.0
 - Added *string.mail*, *string.ipv4*, *string.ipv6*
 - Added *number.port*
