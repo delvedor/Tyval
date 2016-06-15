@@ -20,16 +20,31 @@ Easily require it, compose a function with the chainable api and then use it.
 const tyval = require('tyval')
 
 const stringCheck = tyval.string().max(10).min(1).toFunction()
+const numberCheck = tyval.number().max(1000).min(1).integer().toFunction()
+
 if (stringCheck('Test')) {
   console.log('yay!')
 }
 
-const numberCheck = tyval.number().max(1000).min(1).integer().toFunction()
 if (numberCheck(42)) {
   console.log('The answer')
 }
+
+function strAndNum (str, num ) {
+  if (!stringCheck(str) && !numCheck(num)) {
+    return 'error'
+  }
+  // ...
+}
 ```
+
 **Note that the `.toFunction()` at the end of your validation code is mandatory.**
+
+### Browser version
+If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.com/delvedor/Tyval/blob/master/tyval.min.js), that is generated via *browserify* and *uglify*.
+```html
+<script src="./node_modules/tyval/tyval.min.js"></script>
+```
 
 <a name="api"></a>
 ## API
@@ -256,7 +271,7 @@ If `fast`is *true* the overall performances gets ~4x speed, but the test fails i
 
 
 <a name="extend"></a>
-### tyval._______**.extend(function)
+### tyval._______.extend(function)
 Adds a new validator to tyval.  
 **Inside the `_______` field you must put the type of validator you need to extend.**  
 You can access the variable to validate via `variable`   
@@ -324,9 +339,9 @@ if (ltf(10)) {
 - [x] Add `Date` validator
 - [x] Split test in multiple files
 - [x] New string validation functions
+- [x] Browser version
 - [ ] Improve lib code readability
 - [ ] In toFunction, move function parameters inside function blocks to avoid naming conflicts
-- [ ] Browser version
 - [ ] Add `Any` type
 
 ## Contributing

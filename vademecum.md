@@ -9,15 +9,15 @@ To achieve this two goals the lib adopted few decisions and technical implementa
 Below you will find all the main parts of the code and their explanation.
 
 ### **toFunction** method
-This method is the core of the library, its purpose is to take all the validation function and merge them into a single function via code generation.  
+This method is the core of the library, its purpose is to take all the validation functions and merge them into a single function via code generation.  
 Before starting with the explanation let me introduce the main parameters that we are gonna to use.
-- `validators`, an array with all the validation function, every time you call a validator function, Tyval pushes the function's code inside this array, in this way when toFunction is called, it knows which function it has to merge together.  
+- `validators`, an array with all the validation functions, every time you call a validator function, Tyval pushes the function's code inside this array, in this way when toFunction is called, it knows which function it has to merge together.  
 - `functionCode`, is the string with all the function code.  
 - `parameters` is an object with all the parameters passed to the validation functions.
 
 Ok, now we can start:  
 First, *toFunction* declare the first part of *functionCode*:
-- `use strict` for compatibility with Node v4 and because *"use strict"* is always good;
+- `"use strict"` for compatibility with Node v4 and because *"use strict"* is always good;
 - `check`: that is a boolean value and it's used inside the validation functions;
 - Declaration of all the passed parameters.
 
