@@ -9,6 +9,8 @@ If you want a structured object validator, with an excellent error management an
 Tyval has only one purpose, validate small and focused variables in the fastest way possible via code generation.  
 Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
 
+**Needs Node.js ≥ 4.0.0**
+
 ## Install
 ```
 npm install tyval --save
