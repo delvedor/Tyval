@@ -1,6 +1,6 @@
 {
   "name": "tyval",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Fast and extensible type validator for JavaScript",
   "main": "tyval.js",
   "scripts": {

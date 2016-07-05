@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.6.1
+- Updated ipv6 RegExp
+
 ## v2.6.0
 - Added Browser version
 
