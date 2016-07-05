@@ -5,7 +5,7 @@ Tyval is an extensible type validator for JavaScript, highly inspired from [Joi]
 The design of the API forces to write atomic test, in this way the result of a single test does not influence the others.
 
 
-If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing an good job.  
+If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing a good job.  
 Tyval has only one purpose, validate small and focused variables in the fastest way possible via code generation.  
 Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
 
