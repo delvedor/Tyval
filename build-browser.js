@@ -39,7 +39,7 @@ function replaceExports () {
   console.log('> Start replace')
   selfStream('./tyval.min.js', rs, (err) => {
     if (err) return console.log(err)
-    console.log('> End replace')
+    console.log('< End replace')
     fs.unlink('./bundle.js', (err) => {
       if (err) return console.log(err)
       console.log('Done!')
