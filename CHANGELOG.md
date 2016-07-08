@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.6.2
+- Fix typo in build-browser
+- Regenerated the broswerify version
+
 ## v2.6.1
 - Updated ipv6 RegExp
 
