@@ -110,7 +110,7 @@ test('object.hasNot - multiple', (t) => {
   t.is(typeof tyval.object.hasNot, 'function')
   let hasNot = tyval.object().hasNot('test').hasNot('key').toFunction()
   t.is(typeof hasNot, 'function')
-  t.true(hasNot({test: 1, nope: 2}))
+  t.true(hasNot({nil: 1, nope: 2}))
   t.false(hasNot({test: 1, key: 2}))
 })
 

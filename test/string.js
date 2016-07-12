@@ -119,10 +119,7 @@ test('string.ipv6', (t) => {
 test('string.extend', (t) => {
   t.plan(4)
   tyval.string.extend(function empty () {
-    this.validators.push(function empty () {
-      check = check && variable.length === 0
-    })
-    return this
+    state = state && value.length === 0
   })
   t.is(typeof tyval.string.empty, 'function')
   let empty = tyval.string().empty().toFunction()

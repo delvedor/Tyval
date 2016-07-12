@@ -53,10 +53,7 @@ test('arrayTest', (t) => {
 test('array.extend', (t) => {
   t.plan(4)
   tyval.array.extend(function empty () {
-    this.validators.push(function empty () {
-      check = check && variable.length === 0
-    })
-    return this
+    state = state && value.length === 0
   })
   t.is(typeof tyval.array.empty, 'function')
   let empty = tyval.array().empty().toFunction()
