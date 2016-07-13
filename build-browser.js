@@ -10,7 +10,7 @@ const selfStream = require('self-stream')
 // Streams
 const brBabel = browserify('./tyval.js').transform('babelify', { presets: ['es2015'] }).bundle()
 const ws = fs.createWriteStream('./bundle.js')
-const rs = replaceStream('[function(t,n,e){"use strict";n.exports=', '[function(t,n,e){"use strict";window.tyval=')
+const rs = replaceStream('[function(require,module,exports){"use strict";module.exports=', '[function(require,module,exports){"use strict";window.tyval=')
 
 browserifyCode()
 
@@ -27,7 +27,7 @@ function browserifyCode () {
 
 function uglifyCode () {
   console.log('> Start uglify')
-  const { code } = minify('./bundle.js')
+  const { code } = minify('./bundle.js', { mangle: false })
   fs.writeFile('./tyval.min.js', code, 'utf8', (err) => {
     if (err) return console.log(err)
     console.log('< End uglify')
