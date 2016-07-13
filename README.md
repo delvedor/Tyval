@@ -6,7 +6,7 @@ The design of the API forces to write atomic test, in this way the result of a s
 
 
 If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing a good job.  
-Tyval has only one purpose, validate small and focused variables in the fastest way possible via code generation.  
+Tyval has only one purpose, validate small and focused values in the fastest way possible via code generation.  
 Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
 
 **Needs Node.js ≥ 4.0.0**
@@ -17,7 +17,7 @@ npm install tyval --save
 ```
 
 ## Usage
-Easily require it, compose a function with the chainable api and then use it.
+Easily require it, compose a function with the chainable API and then use it.
 ```javascript
 const tyval = require('tyval')
 
@@ -27,13 +27,12 @@ const numberCheck = tyval.number().max(1000).min(1).integer().toFunction()
 if (stringCheck('Test')) {
   console.log('yay!')
 }
-
 if (numberCheck(42)) {
   console.log('The answer')
 }
 
 function strAndNum (str, num ) {
-  if (!stringCheck(str) && !numCheck(num)) {
+  if (!stringCheck(str) && !numberCheck(num)) {
     return 'error'
   }
   // ...
@@ -99,176 +98,176 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
 
 <a name="string"></a>
 ### tyval.string()
-Checks if the `variable` is a string.
+Checks if the `value` is a string.
 
 <a name="alphanum"></a>
 #### .string().alphanum()
-Checks if the `variable` is alphanumerical.
+Checks if the `value` is alphanumerical.
 
 <a name="regex"></a>
 #### .string().regex(regex)
-Test the regex passed as input on the `variable`.  
+Test the regex passed as input on the `value`.  
 `regex` is the regex code.  
 
 <a name="maxStr"></a>
 #### .string().max(number)
-Checks if the `variable.length` is lower than the passed max value.  
-`number` is the number value to check.
+Checks if the `value.length` is lower than the passed max value.  
+`number` is the number value to state.
 
 <a name="minStr"></a>
 #### .string().min(number)
-Checks if the `variable.length` is higher than the passed min value.  
-`number` is the number value to check.
+Checks if the `value.length` is higher than the passed min value.  
+`number` is the number value to state.
 
 <a name="lengthStr"></a>
 #### .string().length(number)
-Checks if the `variable.length` is equal than the passed value.  
-`number` is the number value to check.
+Checks if the `value.length` is equal than the passed value.  
+`number` is the number value to state.
 
 <a name="mailStr"></a>
 #### .string().mail()
-Checks if the `variable` is a valid mail string.
+Checks if the `value` is a valid mail string.
 
 <a name="ipv4Str"></a>
 #### .string().ipv4()
-Checks if the `variable` is a valid ipv4 string.
+Checks if the `value` is a valid ipv4 string.
 
 <a name="ipv6Str"></a>
 #### .string().ipv6()
-Checks if the `variable` is a valid ipv6 string.
+Checks if the `value` is a valid ipv6 string.
 
 
 <a name="number"></a>
 ### tyval.number()
-Checks if the `variable` is a number.
+Checks if the `value` is a number.
 
 <a name="maxNum"></a>
 #### .number().max(number)
-Checks if the `variable` is lower than the passed max value.  
-`number` is the number value to check.
+Checks if the `value` is lower than the passed max value.  
+`number` is the number value to state.
 
 <a name="minNum"></a>
 #### .number().min(number)
-Checks if the `variable` is higher than the passed min value.  
-`number` is the number value to check.
+Checks if the `value` is higher than the passed min value.  
+`number` is the number value to state.
 
 <a name="positive"></a>
 #### .number().positive()
-Checks if the `variable` is positive.
+Checks if the `value` is positive.
 
 <a name="negative"></a>
 #### .number().negative()
-Checks if the `variable` is negative.
+Checks if the `value` is negative.
 
 <a name="integer"></a>
 #### .number().integer()
-Checks if the `variable` is an integer.
+Checks if the `value` is an integer.
 good
 <a name="float"></a>
 #### .number().float()
-Checks if the `variable` is a float.
+Checks if the `value` is a float.
 
 <a name="safeInteger"></a>
 #### .number().safeInteger()
-Checks if the `variable` is a safeInteger.
+Checks if the `value` is a safeInteger.
 
 <a name="finite"></a>
 #### .number().finite()
-Checks if the `variable` is finite.
+Checks if the `value` is finite.
 
 <a name="multiple"></a>
 #### .number().multiple(number)
-Checks if the `variable` is a multiple of the passed value.  
-`number` is the multiple number value to check.
+Checks if the `value` is a multiple of the passed value.  
+`number` is the multiple number value to state.
 
 <a name="notnan"></a>
 #### .number().notNaN()
-Checks if the `variable` is not a NaN.
+Checks if the `value` is not a NaN.
 
 <a name="portNumber"></a>
 #### .number().port(reserved)
-Checks if the `variable` is a valid network port number.  
+Checks if the `value` is a valid network port number.  
 If `reserved` is equal to true, the test returns false if the port number is lower than 1024.
 
 
 <a name="array"></a>
 ### tyval.array()
-Checks if the `variable` is an array.
+Checks if the `value` is an array.
 
 <a name="maxArray"></a>
 #### .array().max(number)
-Checks if the `variable.length` is lower than the passed max value.  
-`number` is the number value to check.
+Checks if the `value.length` is lower than the passed max value.  
+`number` is the number value to state.
 
 <a name="minArray"></a>
 #### .array().min(number)
-Checks if the `variable.length` is higher than the passed min value.  
-`number` is the number value to check.
+Checks if the `value.length` is higher than the passed min value.  
+`number` is the number value to state.
 
 <a name="lengthArray"></a>
 #### .array().length(number)
-Checks if the `variable.length` is the same as the passed value.  
-`number` is the length number value to check.
+Checks if the `value.length` is the same as the passed value.  
+`number` is the length number value to state.
 
 <a name="containsArray"></a>
 #### .array().contains(value)
-Checks if the array `variable` contains the passed value
+Checks if the array `value` contains the passed value
 
 
 <a name="date"></a>
 ### tyval.date()
-Checks if the `variable` is a date.
+Checks if the `value` is a date.
 
 <a name="dateLower"></a>
 #### .date().lower(date)
-Checks if the `variable.getTime()` is lower than the passed value.  
+Checks if the `value.getTime()` is lower than the passed value.  
 `date` is the date object to compare
 
 <a name="dateHigher"></a>
 #### .date().higher(date)
-Checks if the `variable.getTime()` is higher than the passed value.  
+Checks if the `value.getTime()` is higher than the passed value.  
 `date` is the date object to compare
 
 <a name="boolean"></a>
 ### tyval.boolean()
-Checks if the `variable` is a boolean.
+Checks if the `value` is a boolean.
 
 <a name="object"></a>
 ### tyval.object()
-Checks if the `variable` is an object.
+Checks if the `value` is an object.
 
 <a name="emptyObject"></a>
 #### .object().empty()
-Checks if the `variable` object is empty.
+Checks if the `value` object is empty.
 
 <a name="notNullObject"></a>
 #### .object().notNull()
-Checks if the `variable` object is not null.  
+Checks if the `value` object is not null.  
 This because typeof null = 'object'
 
 <a name="notArrayObject"></a>
 #### .object().notArray()
-Checks if the `variable` object is not an array.  
+Checks if the `value` object is not an array.  
 This because typeof [] = 'object'
 
 <a name="notDateObject"></a>
 #### .object().notDate()
-Checks if the `variable` object is not a date.  
+Checks if the `value` object is not a date.  
 This because typeof new Date() = 'object'
 
 <a name="notRegExpObject"></a>
 #### .object().notRegExp()
-Checks if the `variable` object is not a RegExp.  
+Checks if the `value` object is not a RegExp.  
 This because typeof new RegExp() = 'object'
 
 <a name="hasObject"></a>
 #### .object().has(key, fast)
-Checks if the `variable` object has the key passed as string.  
+Checks if the `value` object has the key passed as string.  
 If `fast`is *true* the overall performances gets ~10x speed, but the test fails if the key value exist and is equal to *undefined*.
 
 <a name="hasNotObject"></a>
 #### .object().hasNot(key, fast)
-Checks if the `variable` object has not the key passed as string.  
+Checks if the `value` object has not the key passed as string.  
 If `fast`is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*.
 
 
@@ -276,25 +275,19 @@ If `fast`is *true* the overall performances gets ~4x speed, but the test fails i
 ### tyval._______.extend(function)
 Adds a new validator to tyval.  
 **Inside the `_______` field you must put the type of validator you need to extend.**  
-You can access the variable to validate via `variable`   
-Use `check = check &&` to elaborate your validation.  
+You can access the value to validate via `value`   
+Use `state = state &&` to elaborate your validation.  
 Usage:
 ```javascript
 tyval./*type you need to extend*/.extend(function someName () {
-  this.validators.push(function someName () {
-    // your validation code
-    check = check && // your boolean validator
-  })
-  return this
+  // your validation code
+  state = state && // your boolean validator
 })
 ```
 Example:
 ```javascript
 tyval.number.extend(function isZero () {
-  this.validators.push(function isZero () {
-    check = check && variable === 0
-  })
-  return this
+  state = state && value === 0
 })
 // let's use the extended function
 const zero = tyval.number().isZero().toFunction()
@@ -305,25 +298,16 @@ if (zero(0)) {
 If you need to pass some `parameter` to the function:
 ```javascript
 tyval./*type you need to extend*/.extend(function someName (param) {
-  this.parameters.paramName = param
-  this.validators.push(function someName () {
-    // your validation code
-    // access the parameter via paramName
-    console.log(paramName)
-    check = check && // your boolean validator
-  })
-  return this
+  // your validation code
+  console.log(param)
+  state = state && // your boolean validator
 })
 ```
-As you can imagine, `variable` and `check` are reserved names of **Tyval**, see [here](https://github.com/delvedor/Tyval/blob/master/vademecum.md) why.
+As you can imagine, `value` and `state` are reserved names of **Tyval**, see [here](https://github.com/delvedor/Tyval/blob/master/vademecum.md) why.
 ```javascript
 // usage example with a parameter
 tyval.number.extend(function lessThan (num) {
-  this.parameters.lessThanParam = num
-  this.validators.push(function lessThan () {
-    check = check && variable < lessThanParam
-  })
-  return this
+  state = state && value < num
 })
 // let's use the extended function with a parameter
 const ltf = tyval.number().lessThan(50).toFunction()
@@ -342,9 +326,11 @@ if (ltf(10)) {
 - [x] Split test in multiple files
 - [x] New string validation functions
 - [x] Browser version
-- [ ] Improve lib code readability
-- [ ] In toFunction, move function parameters inside function blocks to avoid naming conflicts
+- [x] Improve lib code readability
+- [x] In toFunction, move function parameters inside function blocks to avoid naming conflicts
 - [ ] Add `Any` type
+- [ ] Make compatible extend/getArgs with es6
+- [ ] Improve generated code readability
 
 ## Contributing
 If you feel you can help in any way, be it with examples, extra testing, or new features please open a pull request or open an issue.
@@ -358,6 +344,8 @@ The code follows the Standard code style.
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
 ## License
-The code is released under the MIT license.
+**[MIT](https://github.com/delvedor/Tyval/blob/master/LICENSE)**
 
-The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non infringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.
+*The software is provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non infringement. In no event shall the authors or copyright holders be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or the use or other dealings in the software.*
+
+Copyright © 2016 Tomas Della Vedova
