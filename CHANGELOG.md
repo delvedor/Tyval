@@ -1,5 +1,21 @@
 # Changelog
 
+## v3.0.0
+- New `validator` array
+- Removed `parameters` object
+- Rewrite of the API according the new validator array
+- Now all the parameters are block scoped
+- Renamed `check` to `state`
+- Renamed `variable` to `value`
+- Moved `extend` function to `common` utility
+- Rewrited `extend` function
+- Now `extend` function is easy to use
+- Rewrited `toFunction` function
+- Added blocking errors in `common` functions
+- Fixed tests
+- Updated dev deps
+- Updated browser script
+
 ## v2.6.2
 - Fix typo in build-browser
 - Regenerated the broswerify version
