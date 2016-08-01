@@ -1,5 +1,5 @@
 # Tyval
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval)
 
 Tyval is an extensible type validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of [fast](https://github.com/delvedor/Tyval/tree/master/bench) and useful validation functions, with a self-descriptive name.  
 The design of the API forces to write atomic test, in this way the result of a single test does not influence the others.
@@ -58,6 +58,11 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
   * <a href="#mailStr"><code>tyval.string().<b>mail()</b></code></a>
   * <a href="#ipv4Str"><code>tyval.string().<b>ipv4()</b></code></a>
   * <a href="#ipv6Str"><code>tyval.string().<b>ipv6()</b></code></a>
+  * <a href="#base64"><code>tyval.string().<b>base64()</b></code></a>
+  * <a href="#json"><code>tyval.string().<b>JSON()</b></code></a>
+  * <a href="#uuid"><code>tyval.string().<b>uuid()</b></code></a>
+  * <a href="#mac"><code>tyval.string().<b>MAC()</b></code></a>
+  * <a href="#md5"><code>tyval.string().<b>md5()</b></code></a>
 
 
 - <a href="#number"><code>tyval.<b>number()</b></code></a>
@@ -112,17 +117,17 @@ Test the regex passed as input on the `value`.
 <a name="maxStr"></a>
 #### .string().max(number)
 Checks if the `value.length` is lower than the passed max value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="minStr"></a>
 #### .string().min(number)
 Checks if the `value.length` is higher than the passed min value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="lengthStr"></a>
 #### .string().length(number)
 Checks if the `value.length` is equal than the passed value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="mailStr"></a>
 #### .string().mail()
@@ -136,6 +141,26 @@ Checks if the `value` is a valid ipv4 string.
 #### .string().ipv6()
 Checks if the `value` is a valid ipv6 string.
 
+<a name="base64"></a>
+#### .string().base64()
+Checks if the `value` is a valid base64 string.
+
+<a name="json"></a>
+#### .string().JSON()
+Checks if the `value` is a valid JSON.
+
+<a name="uuid"></a>
+#### .string().uuid()
+Checks if the `value` is a valid uuid string.
+
+<a name="mac"></a>
+#### .string().MAC()
+Checks if the `value` is a valid MAC address.
+
+<a name="md5"></a>
+#### .string().md5()
+Checks if the `value` is a valid md5 string.
+
 
 <a name="number"></a>
 ### tyval.number()
@@ -144,12 +169,12 @@ Checks if the `value` is a number.
 <a name="maxNum"></a>
 #### .number().max(number)
 Checks if the `value` is lower than the passed max value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="minNum"></a>
 #### .number().min(number)
 Checks if the `value` is higher than the passed min value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="positive"></a>
 #### .number().positive()
@@ -178,7 +203,7 @@ Checks if the `value` is finite.
 <a name="multiple"></a>
 #### .number().multiple(number)
 Checks if the `value` is a multiple of the passed value.  
-`number` is the multiple number value to state.
+`number` is the multiple number value to check.
 
 <a name="notnan"></a>
 #### .number().notNaN()
@@ -197,17 +222,17 @@ Checks if the `value` is an array.
 <a name="maxArray"></a>
 #### .array().max(number)
 Checks if the `value.length` is lower than the passed max value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="minArray"></a>
 #### .array().min(number)
 Checks if the `value.length` is higher than the passed min value.  
-`number` is the number value to state.
+`number` is the number value to check.
 
 <a name="lengthArray"></a>
 #### .array().length(number)
 Checks if the `value.length` is the same as the passed value.  
-`number` is the length number value to state.
+`number` is the length number value to check.
 
 <a name="containsArray"></a>
 #### .array().contains(value)
