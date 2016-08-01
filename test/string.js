@@ -115,6 +115,56 @@ test('string.ipv6', (t) => {
   t.false(ip('1.2.3.4::'))
   t.false(ip('2001:db8:85a3::8a2e:370k:7334'))
 })
+
+test('string.base64', (t) => {
+  t.plan(6)
+  t.is(typeof tyval.string.base64, 'function')
+  let b64 = tyval.string().base64().toFunction()
+  t.is(typeof b64, 'function')
+  t.true(b64('SSdtIGEgYmFzZTY0IHN0cmluZw=='))
+  t.true(b64('MSsxPTU1'))
+  t.false(b64('I\'m not a base64 string'))
+  t.false(b64('Hello1World=='))
+})
+
+test('string.JSON', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.string.JSON, 'function')
+  let isJSON = tyval.string().JSON().toFunction()
+  t.is(typeof isJSON, 'function')
+  t.true(isJSON('{"valid":true}'))
+  t.false(isJSON('{"valid:false}'))
+})
+
+test('string.uuid', (t) => {
+  t.plan(6)
+  t.is(typeof tyval.string.uuid, 'function')
+  let uuid = tyval.string().uuid().toFunction()
+  t.is(typeof uuid, 'function')
+  t.true(uuid('6fa459ea-ee8a-3ca4-894e-db77e160355e'))
+  t.true(uuid('16fd2706-8baf-433b-82eb-8c7fada847da'))
+  t.true(uuid('886313e1-3b8a-5372-9b90-0c9aee199e5d'))
+  t.false(uuid('what?'))
+})
+
+test('string.MAC', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.string.MAC, 'function')
+  let isMac = tyval.string().MAC().toFunction()
+  t.is(typeof isMac, 'function')
+  t.true(isMac('48-2C-6A-1E-59-3D'))
+  t.false(isMac('nope!'))
+})
+
+test('string.md5', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.string.md5, 'function')
+  let isMd5 = tyval.string().md5().toFunction()
+  t.is(typeof isMd5, 'function')
+  t.true(isMd5('b4dd7f0b0ca6c25dd46cc096e45158eb'))
+  t.false(isMd5('maybe but not'))
+})
+
 /* eslint-disable no-undef */
 test('string.extend', (t) => {
   t.plan(4)
