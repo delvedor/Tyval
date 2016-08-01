@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.0
+- Added *string.base64*, *string.JSON*, *string.uuid*, *string.MAC*, *string.md5*
+
 ## v3.0.0
 - New `validator` array
 - Removed `parameters` object

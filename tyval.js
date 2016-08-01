@@ -1,6 +1,6 @@
 /*
  * Project: Tyval
- * Version: 3.0.0
+ * Version: 3.1.0
  * Author: delvedor
  * Twitter: @delvedor
  * License: MIT
