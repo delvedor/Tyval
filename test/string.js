@@ -169,7 +169,9 @@ test('string.md5', (t) => {
 test('string.extend', (t) => {
   t.plan(4)
   tyval.string.extend(function empty () {
-    state = state && value.length === 0
+    if (value.length > 0) {
+      errors++
+    }
   })
   t.is(typeof tyval.string.empty, 'function')
   let empty = tyval.string().empty().toFunction()

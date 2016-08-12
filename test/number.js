@@ -108,7 +108,9 @@ test('numTest', (t) => {
 test('number.extend', (t) => {
   t.plan(4)
   tyval.number.extend(function isZero () {
-    state = state && value === 0
+    if (value !== 0) {
+      errors++
+    }
   })
   t.is(typeof tyval.number.isZero, 'function')
   let zero = tyval.number().isZero().toFunction()
