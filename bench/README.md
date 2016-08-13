@@ -38,3 +38,15 @@ objHas(fast)-false x 25,290,817 ops/sec ±0.87% (86 runs sampled)
 
 Done!
 ```
+[Benchmark](https://github.com/delvedor/Tyval/blob/master/bench/bench-other-libs.js) comparisons with other libraries:
+```bash
+tyval (num) x 78,669,467 ops/sec ±1.75% (82 runs sampled)
+joi (num) x 37,540 ops/sec ±0.91% (89 runs sampled)
+validate.js (num) x 83,675 ops/sec ±1.60% (89 runs sampled)
+is-my-json-valid (num) x 61,898,685 ops/sec ±1.46% (88 runs sampled)
+
+tyval (str) x 81,093,089 ops/sec ±1.56% (85 runs sampled)
+joi (str) x 22,927 ops/sec ±1.40% (91 runs sampled)
+validate.js (str) x 96,270 ops/sec ±1.14% (91 runs sampled)
+is-my-json-valid (str) x 12,099,361 ops/sec ±1.13% (85 runs sampled)
+```

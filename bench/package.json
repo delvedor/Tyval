@@ -1,0 +1,13 @@
+{
+  "name": "bench",
+  "version": "1.0.0",
+  "description": "## Benchmark",
+  "main": "bench.js",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "is-my-json-valid": "^2.13.1",
+    "joi": "^8.4.2",
+    "validate.js": "^0.10.0"
+  }
+}
