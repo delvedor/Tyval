@@ -2,7 +2,8 @@
 
 ## v3.2.0
 - Now all validators use `if (condition) { errors++ }` statement instead of `state = state && condition`
-- Rewrited *toFunction* method
+- Rewrited *.toFunction()* method
+- Updated *.extend()* method
 - Updated *.integer()*, *.float()* and *.safeInteger()*
 - Added *.npmignore*
 

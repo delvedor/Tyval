@@ -1,6 +1,6 @@
 /*
  * Project: Tyval
- * Version: 3.1.0
+ * Version: 3.2.0
  * Author: delvedor
  * Twitter: @delvedor
  * License: MIT
@@ -17,4 +17,3 @@ module.exports = {
   boolean: require('./lib/boolean'),
   object: require('./lib/object')
 }
-
