@@ -15,5 +15,6 @@ module.exports = {
   array: require('./lib/array'),
   date: require('./lib/date'),
   boolean: require('./lib/boolean'),
-  object: require('./lib/object')
+  object: require('./lib/object'),
+  error: require('./lib/error')
 }
