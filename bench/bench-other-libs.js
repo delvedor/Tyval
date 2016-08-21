@@ -42,7 +42,7 @@ suite
     validatejs.single(num, validatejsNum)
   })
   .add('is-my-json-valid (num)', function () {
-    jsonValidNum(5)
+    jsonValidNum(num)
   })
   .add('tyval (str)', function () {
     tyvalStr(str)

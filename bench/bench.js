@@ -8,4 +8,7 @@ require('./bench-nolib')
 console.log(chalk.yellow('\nBenchmarking lib'))
 require('./bench-lib')
 
+console.log(chalk.yellow('\nBenchmarking other-libs'))
+require('./bench-other-libs')
+
 console.log(chalk.yellow('\nDone!'))
