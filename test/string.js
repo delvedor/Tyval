@@ -180,3 +180,39 @@ test('string.extend', (t) => {
   t.false(empty('.'))
 })
 /* eslint-disable no-undef */
+
+test('string.card', (t) => {
+  t.plan(15)
+  t.is(typeof tyval.string.card, 'function')
+  let card = tyval.string().card('jcb').toFunction()
+  t.true(card('3530111333300000'))
+  t.false(card('378282246310005'))
+
+  card = tyval.string().card('visa').toFunction()
+  t.true(card('4012888888881881'))
+  t.false(card('3566002020360505'))
+
+  card = tyval.string().card('discover').toFunction()
+  t.true(card('6011000990139424'))
+  t.false(card('4111111111111111'))
+
+  card = tyval.string().card('dinersclub').toFunction()
+  t.true(card('38520000023237'))
+  t.false(card('6011111111111117'))
+
+  card = tyval.string().card('mastercard').toFunction()
+  t.true(card('5105105105105100'))
+  t.false(card('38520000023237'))
+
+  card = tyval.string().card('americanexpress').toFunction()
+  t.true(card('371449635398431'))
+  t.false(card('5555555555554444'))
+
+  try {
+    card = tyval.string().card('lannister').toFunction()
+    t.fail()
+  } catch (e) {
+    t.is(e.message, 'lannister card is not supported')
+    t.pass()
+  }
+})

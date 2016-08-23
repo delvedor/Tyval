@@ -74,3 +74,12 @@ test('array.contains', (t) => {
   t.false(contains([1, 2]))
 })
 
+test('array.items', (t) => {
+  t.plan(4)
+  t.is(typeof tyval.array.items, 'function')
+  let item = tyval.string().toFunction()
+  let items = tyval.array().items(item).toFunction()
+  t.is(typeof items, 'function')
+  t.true(items(['a', 'b', 'c']))
+  t.false(items([1, 'a', null]))
+})
