@@ -31,6 +31,10 @@ const jsonValidStr = jsonValid({
 })
 let str = 'Benchmarks!'
 
+const tyvalItems = tyval.array().items(tyvalStr).toFunction()
+const joiItems = Joi.array().items(joiStr)
+let arr = ['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff', 'ggggggg', 'hhhhhhhh', 'iiiiiiiii', 'llllllllll']
+
 suite
   .add('tyval (num)', function () {
     tyvalNum(num)
@@ -55,6 +59,12 @@ suite
   })
   .add('is-my-json-valid (str)', function () {
     jsonValidStr(str)
+  })
+  .add('tyval (array)', function () {
+    tyvalItems(arr)
+  })
+  .add('joi (array)', function () {
+    Joi.validate(arr, joiItems)
   })
   .on('cycle', function (event) {
     console.log(String(event.target))
