@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.3.0
+- Now *.toFunction()* supports `function.toString()`
+- Added `error` type
+- Added *error.RangeError*, *error.ReferenceError*, *error.SyntaxError*, *error.TypeError*, *error.message*
+- Added *string.card*
+- Added *array.items*
+
 ## v3.2.0
 - Now all validators use `if (condition) { errors++ }` statement instead of `state = state && condition`
 - Rewrited *.toFunction()* method
