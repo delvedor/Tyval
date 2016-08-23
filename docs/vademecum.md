@@ -48,6 +48,10 @@ validators.forEach((validator) => {
       } else if (typeof params[val] === 'object' && !(params[val] instanceof RegExp)) {
         value = `${JSON.stringify(params[val])}`
 
+      // If the variable is a function
+      } else if (typeof params[val] === 'function') {
+        value = `${params[val].toString()}`
+
       // In all the other cases we add it 'as is' to the code
       } else {
         value = params[val]

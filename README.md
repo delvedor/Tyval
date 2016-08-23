@@ -76,6 +76,7 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#uuid"><code>tyval.string().<b>uuid()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#mac"><code>tyval.string().<b>MAC()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#md5"><code>tyval.string().<b>md5()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#card"><code>tyval.string().<b>card()</b></code></a>
 
 
 - <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#number"><code>tyval.<b>number()</b></code></a>
@@ -96,6 +97,7 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#minArray"><code>tyval.array().<b>min()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#lengthArray"><code>tyval.array().<b>length()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#containsArray"><code>tyval.array().<b>contains()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#itemsArray"><code>tyval.array().<b>items()</b></code></a>
 
 - <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#date"><code>tyval.<b>date()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#dateLower"><code>tyval.date().<b>lower()</b></code></a>
@@ -111,6 +113,13 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#notRegExpObject"><code>tyval.object().<b>notRegExp()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#hasObject"><code>tyval.object().<b>has()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#hasNotObject"><code>tyval.object().<b>hasNot()</b></code></a>
+
+- <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#Error"><code>tyval.<b>error()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#RangeError"><code>tyval.error().<b>RangeError()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#ReferenceError"><code>tyval.error().<b>ReferenceError()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#SyntaxError"><code>tyval.error().<b>SyntaxError()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#TypeError"><code>tyval.error().<b>TypeError()</b></code></a>
+  * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#message"><code>tyval.error().<b>message()</b></code></a>
 
 - <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#extend"><code>tyval._______.<b>extend()</b></code></a>
 

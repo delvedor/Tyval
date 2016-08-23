@@ -14,6 +14,7 @@
   * <a href="#uuid"><code>tyval.string().<b>uuid()</b></code></a>
   * <a href="#mac"><code>tyval.string().<b>MAC()</b></code></a>
   * <a href="#md5"><code>tyval.string().<b>md5()</b></code></a>
+  * <a href="#card"><code>tyval.card().<b>card()</b></code></a>
 
 
 - <a href="#number"><code>tyval.<b>number()</b></code></a>
@@ -34,6 +35,7 @@
   * <a href="#minArray"><code>tyval.array().<b>min()</b></code></a>
   * <a href="#lengthArray"><code>tyval.array().<b>length()</b></code></a>
   * <a href="#containsArray"><code>tyval.array().<b>contains()</b></code></a>
+  * <a href="itemsArray"><code>tyval.array().<b>items()</b></code></a>
 
 - <a href="#date"><code>tyval.<b>date()</b></code></a>
   * <a href="#dateLower"><code>tyval.date().<b>lower()</b></code></a>
@@ -49,6 +51,13 @@
   * <a href="#notRegExpObject"><code>tyval.object().<b>notRegExp()</b></code></a>
   * <a href="#hasObject"><code>tyval.object().<b>has()</b></code></a>
   * <a href="#hasNotObject"><code>tyval.object().<b>hasNot()</b></code></a>
+
+- <a href="#Error"><code>tyval.<b>error()</b></code></a>
+  * <a href="#RangeError"><code>tyval.error().<b>RangeError()</b></code></a>
+  * <a href="#ReferenceError"><code>tyval.error().<b>ReferenceError()</b></code></a>
+  * <a href="#SyntaxError"><code>tyval.error().<b>SyntaxError()</b></code></a>
+  * <a href="#TypeError"><code>tyval.error().<b>TypeError()</b></code></a>
+  * <a href="#message"><code>tyval.error().<b>message()</b></code></a>
 
 - <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
 
@@ -113,6 +122,11 @@ Checks if the `value` is a valid MAC address.
 <a name="md5"></a>
 #### .string().md5()
 Checks if the `value` is a valid md5 string.
+
+<a name="card"></a>
+#### .string().card(cardType)
+Checks if the `value` is a valid card code string.  
+Accepted cards are: *jcb*, *visa*, *discover*, *dinersclub*, *mastercard*, *americanexpress*
 
 ___
 <a name="number"></a>
@@ -191,6 +205,15 @@ Checks if the `value.length` is the same as the passed value.
 #### .array().contains(value)
 Checks if the array `value` contains the passed value
 
+<a name="itemsArray"></a>
+#### .array().items(function)
+Checks if every array item is valid using the function passed as parameter.  
+Example:  
+```javascript
+const str = tyval.string().min(1).max(10).toFunction()
+const items = tyval.array().items(str).toFunction()
+```
+
 ___
 <a name="date"></a>
 ### tyval.date()
@@ -249,6 +272,32 @@ If `fast`is *true* the overall performances gets ~10x speed, but the test fails 
 #### .object().hasNot(key, fast)
 Checks if the `value` object has not the key passed as string.  
 If `fast`is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*.
+
+___
+<a name="Error"></a>
+### tyval.error()
+Checks if the `value` is an instance of `Error`
+
+<a name="RangeError"></a>
+#### .error().RangeError()
+Checks if the `value` is an instance of `RangeError`
+
+<a name="ReferenceError"></a>
+#### .error().ReferenceError()
+Checks if the `value` is an instance of `ReferenceError`
+
+<a name="SyntaxError"></a>
+#### .error().SyntaxError()
+Checks if the `value` is an instance of `SyntaxError`
+
+<a name="TypeError"></a>
+#### .error().TypeError()
+Checks if the `value` is an instance of `TypeError`
+
+<a name="message"></a>
+#### .error().message(msg)
+Checks if the error message is the same as the given parameter.  
+`msg` must be a string.
 
 ___
 <a name="extend"></a>
