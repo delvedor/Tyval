@@ -1,13 +1,14 @@
 # Tyval
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval) [![NPM downloads](https://img.shields.io/npm/dm/tyval.svg)](https://www.npmjs.com/package/tyval)
 
-Tyval is an extensible validator for JavaScript, highly inspired from [Joi](https://github.com/hapijs/joi), it provides a lot of [fast](https://github.com/delvedor/Tyval/tree/master/bench) and useful validation functions, with a self-descriptive name.  
-The design of the API forces to write atomic test, in this way the result of a single test does not influence the others.
+> Programs should be written for people to read, and only incidentally for machines to execute.  
+> [Abelson and Sussman]
 
+**Tyval** is a validator for JavaScript, focused on **performances** and **extensibility**.  
 
-If you want a structured object validator, with an excellent error management and an integrated parser use Joi, it's just amazing and is doing a good job.  
-Tyval has only one purpose, validate small and focused values in the fastest way possible via code generation.  
-Tyval is synchronous and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed.
+The API is highly inspired from [Joi](https://github.com/hapijs/joi), but the implementation is very different. Tyval uses [code generation](https://github.com/delvedor/Tyval/blob/master/docs/vademecum.md) to achieve maximum speed when evaluating a variable.  
+Tyval is designed to validate single values in a synchronous way and has not an error management, it always returns a boolean, *true* if all the validations has passed, *false* if at least one has failed, the design of the API forces to write atomic test, in this way the result of a single test does not influence the others.
+
 
 **Needs Node.js ≥ 4.0.0**
 
