@@ -59,6 +59,8 @@
   * <a href="#TypeError"><code>tyval.error().<b>TypeError()</b></code></a>
   * <a href="#message"><code>tyval.error().<b>message()</b></code></a>
 
+- <a href="#OR"><code>tyval.<b>or()</b></code></a>
+
 - <a href="#extend"><code>tyval._______.<b>extend()</b></code></a>
 
 ___
@@ -298,6 +300,23 @@ Checks if the `value` is an instance of `TypeError`
 #### .error().message(msg)
 Checks if the error message is the same as the given parameter.  
 `msg` must be a string.
+
+___
+<a name="OR"></a>
+### tyval.or(...)
+With this function you can compose a new validator by combining other tyval validators.  
+The parameters *must be* functions.  
+Example:
+```javascript
+const numMax = tyval.number().max(1).toFunction()
+const numMin = tyval.number().min(10).toFunction()
+// represents n < 1 || n > 10
+const numberLimits = tyval.or(numMax, numMin)
+
+console.log(numberLimits(-3)) // true
+console.log(numberLimits(20)) // true
+console.log(numberLimits(5)) // false
+```
 
 ___
 <a name="extend"></a>

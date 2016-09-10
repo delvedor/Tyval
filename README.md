@@ -2,7 +2,7 @@
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval) [![NPM downloads](https://img.shields.io/npm/dm/tyval.svg)](https://www.npmjs.com/package/tyval)
 
 > Programs should be written for people to read, and only incidentally for machines to execute.  
-> [Abelson and Sussman]
+> *[Abelson and Sussman]*
 
 **Tyval** is a validator for JavaScript, focused on **performances** and **extensibility**.  
 
@@ -35,18 +35,23 @@ Easily require it, compose a function with the chainable API and then use it.
 ```javascript
 const tyval = require('tyval')
 
-const stringCheck = tyval.string().max(10).min(1).toFunction()
-const numberCheck = tyval.number().max(1000).min(1).integer().toFunction()
+const stringValidation = tyval.string().max(10).min(1).alphanum().toFunction()
+const numberValidation = tyval.number().max(1000).min(1).integer().toFunction()
+const numberLimits = tyval.or(tyval.number().max(1).toFunction(), tyval.number().min(10).toFunction())
 
-if (stringCheck('Test')) {
+if (stringValidation('Test123')) {
   console.log('yay!')
 }
-if (numberCheck(42)) {
+if (numberValidation(42)) {
   console.log('Inside the range!')
 }
 
+if (numberLimits(20)) {
+  console.log('number < -1 or number > 10')
+}
+
 function strAndNum (str, num ) {
-  if (!stringCheck(str) && !numberCheck(num)) {
+  if (!stringValidation(str) && !numberValidation(num)) {
     return 'error'
   }
   // ...
@@ -122,6 +127,8 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#TypeError"><code>tyval.error().<b>TypeError()</b></code></a>
   * <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#message"><code>tyval.error().<b>message()</b></code></a>
 
+- <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#OR"><code>tyval.<b>or()</b></code></a>
+
 - <a href="https://github.com/delvedor/Tyval/blob/master/docs/API.md#extend"><code>tyval._______.<b>extend()</b></code></a>
 
 ## TODO
@@ -135,11 +142,12 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
 - [x] Browser version
 - [x] Improve lib code readability
 - [x] In toFunction, move function parameters inside function blocks to avoid naming conflicts
+- [x] Improve generated code readability
+- [x] Add `.or`functionality
 - [ ] Add `Any` type
 - [ ] Make compatible extend/getArgs with es6
-- [ ] Improve generated code readability
-- [ ] Add `.or`functionality, eg: `tyval.string().or.number().toFunction()`
 - [ ] Add `.not`functionality eg: `tyval.not.string().toFunction()`
+- [ ] Remove `.toFunction()`
 
 ## Contributing
 If you feel you can help in any way, be it with examples, extra testing, or new features please open a pull request or open an issue.

@@ -21,12 +21,14 @@ First, *toFunction* declare the first part of *functionCode*:
 
 ```javascript
 // Function code
-let code = '"use strict"\nlet errors = 0\n'
+let code = `  "use strict"
+let errors = 0
+`
 
 // Here we get the validator function code
-validators.forEach((validator) => {
+validators.forEach(validator => {
   // Begins a new block scope
-  code += '{\n'
+  code += '{'
   // Stringify the validator function code
   const functionCode = validator.function.toString()
   // Here we remove the function declaration,
@@ -34,11 +36,12 @@ validators.forEach((validator) => {
   // Because of the lib design the validator function has never parameters,
   // so we can be "safe" about the following implementation.
   const linesOfCode = functionCode.substring(functionCode.indexOf('{') + 1, functionCode.lastIndexOf('}'))
-                                  .replace(/  +/g, ' ') // eslint-disable-line
-                                  .trim()
                                   .split('\n')
+                                  .filter(line => line.trim() !== '') // Removes empty lines
+  // gets first line indentation
+  const spaces = linesOfCode[0].search(/\S/)
   const params = validator.parameters
-  linesOfCode.forEach((line) => {
+  linesOfCode.forEach(line => {
     for (let val in params) {
       let value
       if (typeof params[val] === 'string') {
@@ -46,11 +49,11 @@ validators.forEach((validator) => {
 
       // If the variable is an object (but not an instance of RegExp) we stringify it
       } else if (typeof params[val] === 'object' && !(params[val] instanceof RegExp)) {
-        value = `${JSON.stringify(params[val])}`
+        value = JSON.stringify(params[val])
 
       // If the variable is a function
       } else if (typeof params[val] === 'function') {
-        value = `${params[val].toString()}`
+        value = params[val].toString()
 
       // In all the other cases we add it 'as is' to the code
       } else {
@@ -59,14 +62,17 @@ validators.forEach((validator) => {
       // Replace $varname$ with its value
       line = line.replace(new RegExp('\\' + val.substring(0, val.length - 1) + '\\$', 'g'), value)
     }
-    code += line + '\n'
+    code += `
+${line.slice(spaces)}`
   })
   // Ends the block scope
-  code += '}'
+  code += `
+};`
 })
 
 // Adds the final return
-code += 'return errors === 0'
+code += `
+return errors === 0`
 // Generates the new Function
 return new Function('value', code)
 ```
@@ -84,22 +90,22 @@ function (value) {
   let errors = 0
   {
     if (typeof value !== 'string') {
-      errors++
+      return false
     }
-  }{
+  };{
     if (value < 5) {
       errors++
     }
-  }{
+  };{
     if (value > 10) {
       errors++
     }
-  }{
+  };{
     const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
     if (!reg.test(value)) {
       errors++
     }
-  }
+  };
   return errors === 0
 }
 ```
