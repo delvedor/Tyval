@@ -1,6 +1,6 @@
 /*
  * Project: Tyval
- * Version: 3.3.0
+ * Version: 3.4.0
  * Author: delvedor
  * Twitter: @delvedor
  * License: MIT
@@ -16,5 +16,6 @@ module.exports = {
   date: require('./lib/date'),
   boolean: require('./lib/boolean'),
   object: require('./lib/object'),
-  error: require('./lib/error')
+  error: require('./lib/error'),
+  or: require('./lib/common').or
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.4.0
+- Improved generated code readability
+- Added `or` function
+
 ## v3.3.0
 - Now *.toFunction()* supports `function.toString()`
 - Added `error` type
