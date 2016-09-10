@@ -138,3 +138,65 @@ test('common.extend - errored', (t) => {
 })
 /* eslint-disable no-undef, no-unused-vars */
 
+test('or internal toFunction', (t) => {
+  t.plan(6)
+  t.is(typeof tyval.or, 'function')
+  let validation = tyval.or(tyval.number().min(1).max(10).toFunction(), tyval.string().min(1).max(10).toFunction())
+  t.is(typeof validation, 'function')
+  t.true(validation(5))
+  t.true(validation('test'))
+  t.false(validation(50))
+  t.false(validation('I will fail'))
+})
+
+test('or external toFunction', (t) => {
+  t.plan(6)
+  t.is(typeof tyval.or, 'function')
+  const num = tyval.number().min(1).max(10).toFunction()
+  const str = tyval.string().min(1).max(10).toFunction()
+  let validation = tyval.or(num, str)
+  t.is(typeof validation, 'function')
+  t.true(validation(5))
+  t.true(validation('test'))
+  t.false(validation(50))
+  t.false(validation('I will fail'))
+})
+
+test('or mixed toFunction', (t) => {
+  t.plan(6)
+  t.is(typeof tyval.or, 'function')
+  const num = tyval.number().min(1).max(10).toFunction()
+  let validation = tyval.or(num, tyval.string().min(1).max(10).toFunction())
+  t.is(typeof validation, 'function')
+  t.true(validation(5))
+  t.true(validation('test'))
+  t.false(validation(50))
+  t.false(validation('I will fail'))
+})
+
+test('or multiple', (t) => {
+  t.plan(8)
+  t.is(typeof tyval.or, 'function')
+  const num = tyval.number().min(1).max(10).toFunction()
+  const str = tyval.string().min(1).max(10).toFunction()
+  const obj = tyval.object().empty().toFunction()
+  let validation = tyval.or(num, str, obj)
+  t.is(typeof validation, 'function')
+  t.true(validation(5))
+  t.true(validation('test'))
+  t.true(validation({}))
+  t.false(validation(50))
+  t.false(validation('I will fail'))
+  t.false(validation({ a: '1' }))
+})
+
+test('or number', (t) => {
+  t.plan(3)
+  const num1 = tyval.number().max(1).toFunction()
+  const num2 = tyval.number().min(10).toFunction()
+  // represents n < 1 || n > 10
+  const or = tyval.or(num1, num2)
+  t.true(or(20))
+  t.true(or(-3))
+  t.false(or(5))
+})

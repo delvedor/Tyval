@@ -12,7 +12,7 @@ bench=${1:-default}
 echo "\n-------------------------"
 echo "| Test under Node.js v4 |"
 echo "-------------------------"
-nvm use "4.4.5"
+nvm use "4.5.0"
 npm test
 if [ $bench == "--bench" ]
 then
@@ -32,7 +32,7 @@ fi
 echo "\n-------------------------"
 echo "| Test under Node.js v6 |"
 echo "-------------------------"
-nvm use "6.2.1"
+nvm use "6.5.0"
 npm test
 if [ $bench  == "--bench" ]
 then
