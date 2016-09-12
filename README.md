@@ -36,26 +36,30 @@ Easily require it, compose a function with the chainable API and then use it.
 const tyval = require('tyval')
 
 const stringValidation = tyval.string().max(10).min(1).alphanum().toFunction()
-const numberValidation = tyval.number().max(1000).min(1).integer().toFunction()
 const numberLimits = tyval.or(tyval.number().max(1).toFunction(), tyval.number().min(10).toFunction())
 
-if (stringValidation('Test123')) {
-  console.log('yay!')
-}
-if (numberValidation(42)) {
-  console.log('Inside the range!')
-}
-
-if (numberLimits(20)) {
-  console.log('number < -1 or number > 10')
-}
-
-function strAndNum (str, num ) {
-  if (!stringValidation(str) && !numberValidation(num)) {
-    return 'error'
+function getSomeData (str, num, callback) {
+  if (!stringValidation(str) || !numberLimits(num)) {
+    return callback(new Error('Parameters not as expected!'), null)
   }
-  // ...
+  // . . .
 }
+```
+You can use it for your unit test as well!
+```javascript
+const { test } = require('tap')
+const tyval = require('tyval')
+const generateString = require('../genStr')
+
+const stringValidation = tyval.string().max(10).min(1).alphanum().toFunction()
+
+test('genStr', (t) => {
+  t.plan(1)
+  const result = generateString()
+  // Here we are testing that generateString function returns
+  // an alphanumeric string with a length between 1 and 10 characters
+  t.true(stringValidation(result))
+})
 ```
 
 **Note that the `.toFunction()` at the end of your validation code is mandatory.**
