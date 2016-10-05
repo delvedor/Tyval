@@ -9,127 +9,135 @@ To achieve this two goals the lib adopted few decisions and technical implementa
 Below you will find all the main parts of the code and their explanation.
 
 ### toFunction method
-This method is the core of the library, its purpose is to take all the validation functions and merge them into a single function via code generation.  
-Before starting with the explanation let me introduce the main parameters that we are gonna to use.
-- `validators`, an array, of objects with all the validation functions and parameters, every time you call a validator function, Tyval pushes the function's code inside this array, in this way when toFunction is called, it knows which function it has to merge together.  
-- `code`, is the string with all the function code.  
-
-Ok, now we can start:  
-First, *toFunction* declare the first part of *functionCode*:
-- `"use strict"` for compatibility with Node v4 and because *"use strict"* is always good;
-- `errors`: that is a number value and it's used inside the validation functions;
-
+This method is the core of the library, its purpose is to take all the validation functions and merge them into a single function via code generation. To achieve the *composability* all the type-validator-specific methods are added to the generated function.
 ```javascript
-// Function code
-let code = `  "use strict"
-let errors = 0
-`
-
-// Here we get the validator function code
-validators.forEach(validator => {
-  // Begins a new block scope
-  code += '{'
-  // Stringify the validator function code
-  const functionCode = validator.function.toString()
-  // Here we remove the function declaration,
-  // this works ONLY if there are not destructuring assignment as parameters.
-  // Because of the lib design the validator function has never parameters,
-  // so we can be "safe" about the following implementation.
-  const linesOfCode = functionCode.substring(functionCode.indexOf('{') + 1, functionCode.lastIndexOf('}'))
-                                  .split('\n')
-                                  .filter(line => line.trim() !== '') // Removes empty lines
-  // gets first line indentation
-  const spaces = linesOfCode[0].search(/\S/)
-  const params = validator.parameters
-  linesOfCode.forEach(line => {
-    for (let val in params) {
-      let value
-      if (typeof params[val] === 'string') {
-        value = `'${params[val]}'`
-
-      // If the variable is an object (but not an instance of RegExp) we stringify it
-      } else if (typeof params[val] === 'object' && !(params[val] instanceof RegExp)) {
-        value = JSON.stringify(params[val])
-
-      // If the variable is a function
-      } else if (typeof params[val] === 'function') {
-        value = params[val].toString()
-
-      // In all the other cases we add it 'as is' to the code
-      } else {
-        value = params[val]
-      }
-      // Replace $varname$ with its value
-      line = line.replace(new RegExp('\\' + val.substring(0, val.length - 1) + '\\$', 'g'), value)
+toFunction: function (validatorObject) {
+  return (context, validatorFunction, validatorParameters) => {
+    // Returns an array with every line of the function
+    // Here we remove the function declaration,
+    // this works ONLY if there are not destructuring assignment as parameters.
+    // Because of the lib design the validator function has never parameters,
+    // so we can be "safe" about the following implementation.
+    const linesOfCode = func => {
+      func = func.toString()
+      return func.substring(func.indexOf('{') + 1, func.lastIndexOf('}'))
+                 .split('\n')
+                 .filter(line => line.trim() !== '') // Removes empty lines
     }
-    code += `
-${line.slice(spaces)}`
-  })
-  // Ends the block scope
-  code += `
-};`
-})
 
-// Adds the final return
-code += `
-return errors === 0`
-// Generates the new Function
-return new Function('value', code)
+    let code = ''
+    // if the validator has already been defined
+    if (context !== null) {
+      let lines = linesOfCode(context)
+      // Gets the number of spaces between
+      // the beginning of the string and the first character
+      let spaces = lines[0].search(/\S/)
+      // Formats the indentation
+      lines.forEach((line, index) => {
+        if (index === lines.length - 1) return
+        if (line.trim() === '{') spaces = line.search(/\S/)
+        code += `
+   ${line.slice(spaces)}`
+      })
+    // if is a new validator
+    } else {
+    // Function code
+      code = `
+  "use strict"
+  `
+    }
+
+    code += `
+  {`
+    const lines = linesOfCode(validatorFunction)
+    const spaces = lines[0].search(/\S/)
+
+    lines.forEach(line => {
+      for (let val in validatorParameters) {
+        let value
+        if (typeof validatorParameters[val] === 'string') {
+          value = `'${validatorParameters[val]}'`
+
+        // If the variable is an object (but not an instance of RegExp) we stringify it
+        } else if (typeof validatorParameters[val] === 'object' && !(validatorParameters[val] instanceof RegExp)) {
+          value = JSON.stringify(validatorParameters[val])
+
+        // If the variable is a function
+        } else if (typeof validatorParameters[val] === 'function') {
+          value = validatorParameters[val].toString()
+
+        // In all the other cases we add it 'as is' to the code
+        } else {
+          value = validatorParameters[val]
+        }
+        // Replace $varname$ with its value
+        line = line.replace(new RegExp('\\' + val.substring(0, val.length - 1) + '\\$', 'g'), value)
+      }
+      code += `
+    ${line.slice(spaces)}`
+    })
+    // Ends the block scope
+    code += `
+  };`
+
+    code += `
+  return true`
+
+    // Appends all the validator functions to the newly generated function
+    const func = new Function('value', code)
+    Object.keys(validatorObject).forEach(val => {
+      func[val] = validatorObject[val]
+    })
+
+    // Fix for .length property
+    Object.defineProperty(func, 'length', {
+      writable: true
+    })
+    if (typeof validatorObject.length === 'function') {
+      func.length = validatorObject.length
+    }
+
+    return func
+  }
+}
 ```
 See the [full code](https://github.com/delvedor/Tyval/blob/master/lib/common.js)!  
 
 **Real world example:**  
 This following code
 ```javascript
-const strTest = tyval.string().min(5).max(10).alphanum().toFunction()
+const strTest = tyval.string().min(5).max(10).alphanum()
 ```
 generates:
 ```javascript
 function (value) {
   "use strict"
-  let errors = 0
   {
     if (typeof value !== 'string') {
       return false
     }
   };{
     if (value < 5) {
-      errors++
+      return false
     }
   };{
     if (value > 10) {
-      errors++
+      return false
     }
   };{
     const reg = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i;
     if (!reg.test(value)) {
-      errors++
+      return false
     }
   };
-  return errors === 0
+  return true
 }
 ```
 Before version 3.2.0, the validator was checked by a boolean assign, `state = state && condition`.  
-From version 3.2.0, Tyval uses the implementation of [is-my-json-valid](https://github.com/mafintosh/is-my-json-valid), `if (condition) { errors++ }`, because has better performances.
+From version 4.0.0, Tyval uses the following implementation, `if (condition) { return false }`, because has better performances.
 
-### validators array
-Tyval uses the *validators* function array because of how works *toFunction*, it's useful for make easier generate the final function code.  
-Is built this way:  
-```javascript
-[{
-  function: function func1 () { ... },
-  parameters: { ... }
-},
-{
-  function: function func2 () { ... },
-  parameters: { ... }
-},
-{
-  function: function func3 () { ... },
-  parameters: { ... }
-}]
-```
 <a name="whydollar"></a>
+### Why $varname$
 Inside the parameters object every key is saved as `$varname$ : value`, the `'$'` are used during the code generation to replace the `$varname$` with his value to improve performances.  
 Example:
 ```javascript
@@ -142,27 +150,42 @@ if (value > 5) { ... }
 ### extend method
 Extensibility is one of the core concept of Tyval, with the version 3.0.0 the `extend` function has been rewrited and simplified its use.
 ```javascript
-// Gets the parameters name
-const parametersName = this.getArgs(func)
-
-// Extends the passed tyval validator with a new function
-tyvalValidator[func.name] = function () {
-  // gets the parameters passed as arguments
-  const parametersValue = Array.prototype.slice.call(arguments)
-
-  // Instantiate the parameters object
-  const parameters = {}
-  for (let i = 0; i < parametersName.length; i++) {
-    // Adds the parameters name: value
-    parameters['$' + parametersName[i] + '$'] = parametersValue[i]
+extend: function (tyvalValidator, func, toFunction) {
+  // Thanks to: https://davidwalsh.name/javascript-arguments
+  // gets the name of the arguments of a function
+  const getArgs = func => {
+    // First match everything inside the function argument parens.
+    let args = func.toString().match(/function\s.*?\(([^)]*)\)/)[1]
+    // Split the arguments string into an array comma delimited.
+    return args.split(',').map(arg => {
+      // Ensure no inline comments are parsed and trim the whitespace.
+      return arg.replace(/\/\*.*\*\//, '').trim()
+    }).filter(arg => {
+      // Ensure no undefined values are added.
+      return arg
+    })
   }
 
-  // Push the function and the generated parameters object
-  tyvalValidator.validators.push({
-    function: func,
-    parameters: parameters
-  })
+  // Gets the parameters name
+  const parametersName = getArgs(func)
 
-  return tyvalValidator
+  // Extends the passed tyval validator with a new function
+  tyvalValidator[func.name] = function () {
+    // gets the parameters passed as arguments
+    const parametersValue = Array.prototype.slice.call(arguments)
+    if (parametersName.length !== parametersValue.length) {
+      throw new Error('The length of parametersName and parametersValue do not coincide')
+    }
+
+    // Instantiate the parameters object
+    const parameters = {}
+    for (let i = 0; i < parametersName.length; i++) {
+      // Adds the parameters name: value
+      parameters['$' + parametersName[i] + '$'] = parametersValue[i]
+    }
+
+    return toFunction(this, func, parameters)
+  }
+}
 ```
 See the [full code](https://github.com/delvedor/Tyval/blob/master/lib/common.js)!

@@ -179,9 +179,9 @@ Checks if the `value` is a multiple of the passed value.
 Checks if the `value` is not a NaN.
 
 <a name="portNumber"></a>
-#### .number().port(reserved)
+#### .number().port(options)
 Checks if the `value` is a valid network port number.  
-If `reserved` is equal to true, the test returns false if the port number is lower than 1024.
+If `reserved` is equal to true, the test returns false if the port number is lower than 1024, default to *false*. Usage: `.number().port(3000, { reserved: true })`.
 
 ___
 <a name="array"></a>
@@ -212,8 +212,8 @@ Checks if the array `value` contains the passed value
 Checks if every array item is valid using the function passed as parameter.  
 Example:  
 ```javascript
-const str = tyval.string().min(1).max(10).toFunction()
-const items = tyval.array().items(str).toFunction()
+const str = tyval.string().min(1).max(10)
+const items = tyval.array().items(str)
 ```
 
 ___
@@ -266,14 +266,15 @@ Checks if the `value` object is not a RegExp.
 This because `typeof new RegExp() = 'object'`
 
 <a name="hasObject"></a>
-#### .object().has(key, fast)
+#### .object().has(key, options)
 Checks if the `value` object has the key passed as string.  
-If `fast`is *true* the overall performances gets ~10x speed, but the test fails if the key value exist and is equal to *undefined*.
+If `fast` is *true* the overall performances gets ~10x speed, but the test fails if the key value exist and is equal to *undefined*, default to *false*. Usage: `.object().has('key', { fast: true })`
+
 
 <a name="hasNotObject"></a>
-#### .object().hasNot(key, fast)
+#### .object().hasNot(key, options)
 Checks if the `value` object has not the key passed as string.  
-If `fast`is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*.
+If `fast` is *true* the overall performances gets ~4x speed, but the test fails if the key value exist and is equal to *undefined*, default to *false*. Usage: `.object().hasNot('key', { fast: true })`
 
 ___
 <a name="Error"></a>
@@ -308,8 +309,8 @@ With this function you can compose a new validator by combining other tyval vali
 The parameters *must be* functions.  
 Example:
 ```javascript
-const numMax = tyval.number().max(1).toFunction()
-const numMin = tyval.number().min(10).toFunction()
+const numMax = tyval.number().max(1)
+const numMin = tyval.number().min(10)
 // represents n < 1 || n > 10
 const numberLimits = tyval.or(numMax, numMin)
 
@@ -324,13 +325,13 @@ ___
 Adds a new validator to tyval.  
 **Inside the `_______` field you must put the type of validator you need to extend.**  
 You can access the value to validate via `value`   
-Use `if (condition) { errors++ }` to elaborate your validation.  
+Use `if (condition) { return false }` to elaborate your validation.  
 Usage:
 ```javascript
 tyval./*type you need to extend*/.extend(function someName () {
   // your validation code
   if (/* your boolean validator */) {
-    errors++
+    return false
   }
 })
 ```
@@ -338,11 +339,11 @@ Example:
 ```javascript
 tyval.number.extend(function isZero () {
   if (value !== 0) {
-    errors++
+    return false
   }
 })
 // let's use the extended function
-const zero = tyval.number().isZero().toFunction()
+const zero = tyval.number().isZero()
 if (zero(0)) {
   console.log('is equal to zero :D')
 }
@@ -353,21 +354,21 @@ tyval./*type you need to extend*/.extend(function someName (param) {
   // your validation code
   console.log($param$)
   if (/* your boolean validator */) {
-    errors++
+    return false
   }
 })
 ```
-As you can imagine, `value` and `errors` are reserved names of **Tyval**, see [here](https://github.com/delvedor/Tyval/blob/master/docs/vademecum.md) why.  
+As you can imagine, `value` is a reserved name of **Tyval**, see [here](https://github.com/delvedor/Tyval/blob/master/docs/vademecum.md) why.  
 If you are passing some variable in your function, write it with `'$'` inside your code, as you can see in the example, see [here](https://github.com/delvedor/Tyval/blob/master/docs/vademecum.md#whydollar) why.
 ```javascript
 // usage example with a parameter
 tyval.number.extend(function lessThan (num) {
   if (value > $num$) {
-    errors++
+    return false
   }
 })
 // let's use the extended function with a parameter
-const ltf = tyval.number().lessThan(50).toFunction()
+const ltf = tyval.number().lessThan(50)
 if (ltf(10)) {
   console.log('is less than 50!')
 }

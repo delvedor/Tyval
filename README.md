@@ -1,5 +1,5 @@
 # Tyval
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval) [![NPM downloads](https://img.shields.io/npm/dm/tyval.svg)](https://www.npmjs.com/package/tyval)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/) [![Build Status](https://travis-ci.org/delvedor/Tyval.svg?branch=master)](https://travis-ci.org/delvedor/Tyval) [![NPM version](https://img.shields.io/npm/v/tyval.svg?style=flat)](https://www.npmjs.com/package/tyval)
 
 > Programs should be written for people to read, and only incidentally for machines to execute.  
 > *[Abelson and Sussman]*
@@ -35,8 +35,8 @@ Easily require it, compose a function with the chainable API and then use it.
 ```javascript
 const tyval = require('tyval')
 
-const stringValidation = tyval.string().max(10).min(1).alphanum().toFunction()
-const numberLimits = tyval.or(tyval.number().max(1).toFunction(), tyval.number().min(10).toFunction())
+const stringValidation = tyval.string().max(10).min(1).alphanum()
+const numberLimits = tyval.or(tyval.number().max(1), tyval.number().min(10))
 
 function getSomeData (str, num, callback) {
   if (!stringValidation(str) || !numberLimits(num)) {
@@ -45,13 +45,27 @@ function getSomeData (str, num, callback) {
   // . . .
 }
 ```
+Were you saying composability? :)
+```javascript
+const tyval = require('tyval')
+const arr = tyval.array()
+
+const arrMin = arr.min(5)
+const arrMax = arr.max(20)
+const arrRange = tyval.or(arrMin, arrMax)
+
+const arrContain = arr.contains('string')
+const arrContainMin = arrContain.min(5)
+// Needless to say that the composability
+// works only with validations of the same type.
+```
 You can use it for your unit test as well!
 ```javascript
 const { test } = require('tap')
 const tyval = require('tyval')
 const generateString = require('../genStr')
 
-const stringValidation = tyval.string().max(10).min(1).alphanum().toFunction()
+const stringValidation = tyval.string().max(10).min(1).alphanum()
 
 test('genStr', (t) => {
   t.plan(1)
@@ -62,7 +76,6 @@ test('genStr', (t) => {
 })
 ```
 
-**Note that the `.toFunction()` at the end of your validation code is mandatory.**
 
 ### Browser version
 If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.com/delvedor/Tyval/blob/master/tyval.min.js), that is generated via *browserify* and *uglify*.
@@ -148,10 +161,10 @@ If you need to use Tyval inside the browser use [`tyval.min.js`](https://github.
 - [x] In toFunction, move function parameters inside function blocks to avoid naming conflicts
 - [x] Improve generated code readability
 - [x] Add `.or`functionality
+- [x] Remove `.toFunction()`
 - [ ] Add `Any` type
 - [ ] Make compatible extend/getArgs with es6
-- [ ] Add `.not`functionality eg: `tyval.not.string().toFunction()`
-- [ ] Remove `.toFunction()`
+- [ ] Add `.not`functionality eg: `tyval.not.string()`
 
 ## Contributing
 If you feel you can help in any way, be it with examples, extra testing, or new features please open a pull request or open an issue.
