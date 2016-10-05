@@ -10,7 +10,7 @@ const validatejs = require('validate.js')
 const jsonValid = require('is-my-json-valid')
 
 // Number validations
-const tyvalNum = tyval.number().min(-5).max(10).integer().toFunction()
+const tyvalNum = tyval.number().min(-5).max(10).integer()
 const joiNum = Joi.number().min(-5).max(10).integer()
 const validatejsNum = { numericality: { greaterThanOrEqualTo: -5, lessThanOrEqualTo: 10, onlyInteger: true } }
 const jsonValidNum = jsonValid({
@@ -21,7 +21,7 @@ const jsonValidNum = jsonValid({
 let num = Math.floor(Math.random() * 15) - 5
 
 // String validations
-const tyvalStr = tyval.string().min(1).max(20).toFunction()
+const tyvalStr = tyval.string().min(1).max(20)
 const joiStr = Joi.string().min(1).max(20)
 const validatejsStr = { length: { minimum: 1, maximum: 20 } }
 const jsonValidStr = jsonValid({
@@ -31,7 +31,7 @@ const jsonValidStr = jsonValid({
 })
 let str = 'Benchmarks!'
 
-const tyvalItems = tyval.array().items(tyvalStr).toFunction()
+const tyvalItems = tyval.array().items(tyvalStr)
 const joiItems = Joi.array().items(joiStr)
 let arr = ['a', 'bb', 'ccc', 'dddd', 'eeeee', 'ffffff', 'ggggggg', 'hhhhhhhh', 'iiiiiiiii', 'llllllllll']
 

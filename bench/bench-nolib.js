@@ -66,42 +66,40 @@ let objToTest = {
 
 suite
   .add('numTest', function () {
-    if (numTest(5)) noop()
+    numTest(5)
   })
   .add('numTest-false', function () {
-    if (numTest(-50)) noop()
+    numTest(-50)
   })
   .add('strTest', function () {
-    if (strTest('abc123')) noop()
+    strTest('abc123')
   })
   .add('strTest-false', function () {
-    if (strTest('abcdef')) noop()
+    strTest('abcdef')
   })
   .add('arrayTest', function () {
-    if (arrayTest([1, 2, 3])) noop()
+    arrayTest([1, 2, 3])
   })
   .add('arrayTest-false', function () {
-    if (arrayTest([1])) noop()
+    arrayTest([1])
   })
   .add('objTest', function () {
-    if (objTest({})) noop()
+    objTest({})
   })
   .add('objTest-false', function () {
-    if (objTest([])) noop()
+    objTest([])
   })
   .add('objHas', function () {
-    if (objHas({test: 1, bench: 2})) noop()
+    objHas({test: 1, bench: 2})
   })
   .add('objHas-false', function () {
-    if (objHas({test: 1, bench: 2, nope: 3})) noop()
+    objHas({test: 1, bench: 2, nope: 3})
   })
   .add('combined obj and str', function () {
-    if (objHas(objToTest) && strTest(objToTest.test) && numTest(objToTest.bench)) noop()
+    objHas(objToTest) && strTest(objToTest.test) && numTest(objToTest.bench)
   })
   .on('cycle', function (event) {
     console.log(String(event.target))
   })
   .on('complete', function () {})
   .run()
-
-function noop () {}
