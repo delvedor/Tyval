@@ -1,6 +1,6 @@
 {
   "name": "tyval",
-  "version": "3.4.0",
+  "version": "4.0.0",
   "description": "Fast and extensible validator for JavaScript",
   "main": "tyval.js",
   "scripts": {
@@ -11,14 +11,15 @@
     "browser": "node build-browser.js"
   },
   "keywords": [
-    "type",
+    "fast",
     "validator",
+    "validation",
+    "extensible",
+    "composable",
+    "type",
     "variable",
     "check",
-    "extensible",
-    "fast",
-    "value",
-    "validation"
+    "value"
   ],
   "author": "Tomas Della Vedova - @delvedor (http://delved.org)",
   "license": "MIT",
@@ -34,15 +35,15 @@
     "node": ">=4.0.0"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-es2015": "^6.16.0",
     "babelify": "^7.3.0",
     "benchmark": "^2.1.1",
     "browserify": "^13.1.0",
     "chalk": "^1.1.3",
     "replacestream": "^4.0.2",
     "self-stream": "^1.1.1",
-    "standard": "^7.1.1",
-    "tap": "^6.3.2",
+    "standard": "^8.3.0",
+    "tap": "^7.1.2",
     "uglify-js": "^2.7.3"
   },
   "dependencies": {}

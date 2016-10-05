@@ -1,5 +1,14 @@
 # Changelog
 
+## v4.0.0
+- Removed `.toFunction()`
+- Moved from `errors++` to `return false`
+- Refactor of library internal code
+- Composability! :)
+- Changed *fast* argument in object.has and .object.hasNot
+- Changed *reserved* argument in number.port
+- Added more type checks
+
 ## v3.4.0
 - Improved generated code readability
 - Added `or` function
