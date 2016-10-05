@@ -7,7 +7,7 @@ const tyval = require('../tyval')
 test('object', (t) => {
   t.plan(4)
   t.is(typeof tyval.object, 'function')
-  let obj = tyval.object().toFunction()
+  let obj = tyval.object()
   t.is(typeof obj, 'function')
   t.true(obj({}))
   t.false(obj('test'))
@@ -16,7 +16,7 @@ test('object', (t) => {
 test('object.empty', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.empty, 'function')
-  let empty = tyval.object().empty().toFunction()
+  let empty = tyval.object().empty()
   t.is(typeof empty, 'function')
   t.true(empty({}))
   t.false(empty({key: 'value'}))
@@ -25,7 +25,7 @@ test('object.empty', (t) => {
 test('object.notNull', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.notNull, 'function')
-  let n = tyval.object().notNull().toFunction()
+  let n = tyval.object().notNull()
   t.is(typeof n, 'function')
   t.true(n({}))
   t.false(n(null))
@@ -34,7 +34,7 @@ test('object.notNull', (t) => {
 test('object.notArray', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.notArray, 'function')
-  let a = tyval.object().notArray().toFunction()
+  let a = tyval.object().notArray()
   t.is(typeof a, 'function')
   t.true(a({}))
   t.false(a([]))
@@ -43,7 +43,7 @@ test('object.notArray', (t) => {
 test('object.notDate', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.notDate, 'function')
-  let n = tyval.object().notDate().toFunction()
+  let n = tyval.object().notDate()
   t.is(typeof n, 'function')
   t.true(n({}))
   t.false(n(new Date()))
@@ -52,7 +52,7 @@ test('object.notDate', (t) => {
 test('object.notRegExp', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.notRegExp, 'function')
-  let n = tyval.object().notRegExp().toFunction()
+  let n = tyval.object().notRegExp()
   t.is(typeof n, 'function')
   t.true(n({}))
   t.false(n(new RegExp()))
@@ -61,7 +61,7 @@ test('object.notRegExp', (t) => {
 test('object.has', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.has, 'function')
-  let has = tyval.object().has('test').toFunction()
+  let has = tyval.object().has('test')
   t.is(typeof has, 'function')
   t.true(has({test: ''}))
   t.false(has({nope: ''}))
@@ -70,7 +70,7 @@ test('object.has', (t) => {
 test('object.has fast', (t) => {
   t.plan(5)
   t.is(typeof tyval.object.has, 'function')
-  let has = tyval.object().has('test', true).toFunction()
+  let has = tyval.object().has('test', { fast: true })
   t.is(typeof has, 'function')
   t.true(has({test: ''}))
   t.false(has({nope: ''}))
@@ -80,7 +80,7 @@ test('object.has fast', (t) => {
 test('object.hasNot', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.hasNot, 'function')
-  let hasNot = tyval.object().hasNot('test').toFunction()
+  let hasNot = tyval.object().hasNot('test')
   t.is(typeof hasNot, 'function')
   t.true(hasNot({nope: ''}))
   t.false(hasNot({test: ''}))
@@ -89,7 +89,7 @@ test('object.hasNot', (t) => {
 test('object.hasNot fast', (t) => {
   t.plan(5)
   t.is(typeof tyval.object.hasNot, 'function')
-  let hasNot = tyval.object().hasNot('test', true).toFunction()
+  let hasNot = tyval.object().hasNot('test', { fast: true })
   t.is(typeof hasNot, 'function')
   t.true(hasNot({nope: ''}))
   t.false(hasNot({test: ''}))
@@ -99,7 +99,7 @@ test('object.hasNot fast', (t) => {
 test('object.has - multiple', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.has, 'function')
-  let has = tyval.object().has('test').has('key').toFunction()
+  let has = tyval.object().has('test').has('key')
   t.is(typeof has, 'function')
   t.true(has({test: 1, key: 2}))
   t.false(has({test: 1, nope: 2}))
@@ -108,7 +108,7 @@ test('object.has - multiple', (t) => {
 test('object.hasNot - multiple', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.hasNot, 'function')
-  let hasNot = tyval.object().hasNot('test').hasNot('key').toFunction()
+  let hasNot = tyval.object().hasNot('test').hasNot('key')
   t.is(typeof hasNot, 'function')
   t.true(hasNot({nil: 1, nope: 2}))
   t.false(hasNot({test: 1, key: 2}))
@@ -117,7 +117,7 @@ test('object.hasNot - multiple', (t) => {
 test('object.has - object.hasNot', (t) => {
   t.plan(4)
   t.is(typeof tyval.object.hasNot, 'function')
-  let key = tyval.object().has('test').hasNot('key').toFunction()
+  let key = tyval.object().has('test').hasNot('key')
   t.is(typeof key, 'function')
   t.true(key({test: 1, nope: 2}))
   t.false(key({test: 1, key: 2}))

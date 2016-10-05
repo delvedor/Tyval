@@ -7,7 +7,7 @@ const tyval = require('../tyval')
 test('string', (t) => {
   t.plan(4)
   t.is(typeof tyval.string, 'function')
-  let str = tyval.string().toFunction()
+  let str = tyval.string()
   t.is(typeof str, 'function')
   t.true(str('test'))
   t.false(str(1))
@@ -16,7 +16,7 @@ test('string', (t) => {
 test('string.alphanum', (t) => {
   t.plan(5)
   t.is(typeof tyval.string.alphanum, 'function')
-  let alp = tyval.string().alphanum().toFunction()
+  let alp = tyval.string().alphanum()
   t.is(typeof alp, 'function')
   t.true(alp('abcd1234'))
   t.false(alp('abcd'))
@@ -26,7 +26,7 @@ test('string.alphanum', (t) => {
 test('string.regex', (t) => {
   t.plan(5)
   t.is(typeof tyval.string.regex, 'function')
-  let regex = tyval.string().regex(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i).toFunction()
+  let regex = tyval.string().regex(/((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i)
   t.is(typeof regex, 'function')
   t.true(regex('abcd1234'))
   t.false(regex('abcd'))
@@ -36,7 +36,7 @@ test('string.regex', (t) => {
 test('string.max', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.max, 'function')
-  let max = tyval.string().max(10).toFunction()
+  let max = tyval.string().max(10)
   t.is(typeof max, 'function')
   t.true(max('test'))
   t.false(max('testtesttest'))
@@ -45,7 +45,7 @@ test('string.max', (t) => {
 test('string.min', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.min, 'function')
-  let min = tyval.string().min(3).toFunction()
+  let min = tyval.string().min(3)
   t.is(typeof min, 'function')
   t.true(min('test'))
   t.false(min('no'))
@@ -54,7 +54,7 @@ test('string.min', (t) => {
 test('string.length', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.length, 'function')
-  let len = tyval.string().length(4).toFunction()
+  let len = tyval.string().length(4)
   t.is(typeof len, 'function')
   t.true(len('test'))
   t.false(len('!test'))
@@ -62,7 +62,7 @@ test('string.length', (t) => {
 
 test('strTest', (t) => {
   t.plan(5)
-  let strTest = tyval.string().min(5).max(10).alphanum().toFunction()
+  let strTest = tyval.string().min(5).max(10).alphanum()
   t.is(typeof strTest, 'function')
   t.true(strTest('abc123'))
   t.false(strTest('abc'))
@@ -73,7 +73,7 @@ test('strTest', (t) => {
 test('string.mail', (t) => {
   t.plan(9)
   t.is(typeof tyval.string.mail, 'function')
-  let mail = tyval.string().mail().toFunction()
+  let mail = tyval.string().mail()
   t.is(typeof mail, 'function')
   t.true(mail('test@gmail.com'))
   t.true(mail('make.test@sub.domain.com'))
@@ -87,7 +87,7 @@ test('string.mail', (t) => {
 test('string.ipv4', (t) => {
   t.plan(9)
   t.is(typeof tyval.string.ipv4, 'function')
-  let ip = tyval.string().ipv4().toFunction()
+  let ip = tyval.string().ipv4()
   t.is(typeof ip, 'function')
   t.true(ip('192.168.20.20'))
   t.true(ip('0.255.0.255'))
@@ -101,7 +101,7 @@ test('string.ipv4', (t) => {
 test('string.ipv6', (t) => {
   t.plan(13)
   t.is(typeof tyval.string.ipv6, 'function')
-  let ip = tyval.string().ipv6().toFunction()
+  let ip = tyval.string().ipv6()
   t.is(typeof ip, 'function')
   t.true(ip('2001:0db8:0000:0000:0000:0000:1428:57ab'))
   t.true(ip('2001:0db8:0000:0000::1428:57ab'))
@@ -119,7 +119,7 @@ test('string.ipv6', (t) => {
 test('string.base64', (t) => {
   t.plan(6)
   t.is(typeof tyval.string.base64, 'function')
-  let b64 = tyval.string().base64().toFunction()
+  let b64 = tyval.string().base64()
   t.is(typeof b64, 'function')
   t.true(b64('SSdtIGEgYmFzZTY0IHN0cmluZw=='))
   t.true(b64('MSsxPTU1'))
@@ -130,7 +130,7 @@ test('string.base64', (t) => {
 test('string.JSON', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.JSON, 'function')
-  let isJSON = tyval.string().JSON().toFunction()
+  let isJSON = tyval.string().JSON()
   t.is(typeof isJSON, 'function')
   t.true(isJSON('{"valid":true}'))
   t.false(isJSON('{"valid:false}'))
@@ -139,7 +139,7 @@ test('string.JSON', (t) => {
 test('string.uuid', (t) => {
   t.plan(6)
   t.is(typeof tyval.string.uuid, 'function')
-  let uuid = tyval.string().uuid().toFunction()
+  let uuid = tyval.string().uuid()
   t.is(typeof uuid, 'function')
   t.true(uuid('6fa459ea-ee8a-3ca4-894e-db77e160355e'))
   t.true(uuid('16fd2706-8baf-433b-82eb-8c7fada847da'))
@@ -150,7 +150,7 @@ test('string.uuid', (t) => {
 test('string.MAC', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.MAC, 'function')
-  let isMac = tyval.string().MAC().toFunction()
+  let isMac = tyval.string().MAC()
   t.is(typeof isMac, 'function')
   t.true(isMac('48-2C-6A-1E-59-3D'))
   t.false(isMac('nope!'))
@@ -159,7 +159,7 @@ test('string.MAC', (t) => {
 test('string.md5', (t) => {
   t.plan(4)
   t.is(typeof tyval.string.md5, 'function')
-  let isMd5 = tyval.string().md5().toFunction()
+  let isMd5 = tyval.string().md5()
   t.is(typeof isMd5, 'function')
   t.true(isMd5('b4dd7f0b0ca6c25dd46cc096e45158eb'))
   t.false(isMd5('maybe but not'))
@@ -170,11 +170,11 @@ test('string.extend', (t) => {
   t.plan(4)
   tyval.string.extend(function empty () {
     if (value.length > 0) {
-      errors++
+      return false
     }
   })
   t.is(typeof tyval.string.empty, 'function')
-  let empty = tyval.string().empty().toFunction()
+  let empty = tyval.string().empty()
   t.is(typeof empty, 'function')
   t.true(empty(''))
   t.false(empty('.'))
@@ -184,32 +184,32 @@ test('string.extend', (t) => {
 test('string.card', (t) => {
   t.plan(15)
   t.is(typeof tyval.string.card, 'function')
-  let card = tyval.string().card('jcb').toFunction()
+  let card = tyval.string().card('jcb')
   t.true(card('3530111333300000'))
   t.false(card('378282246310005'))
 
-  card = tyval.string().card('visa').toFunction()
+  card = tyval.string().card('visa')
   t.true(card('4012888888881881'))
   t.false(card('3566002020360505'))
 
-  card = tyval.string().card('discover').toFunction()
+  card = tyval.string().card('discover')
   t.true(card('6011000990139424'))
   t.false(card('4111111111111111'))
 
-  card = tyval.string().card('dinersclub').toFunction()
+  card = tyval.string().card('dinersclub')
   t.true(card('38520000023237'))
   t.false(card('6011111111111117'))
 
-  card = tyval.string().card('mastercard').toFunction()
+  card = tyval.string().card('mastercard')
   t.true(card('5105105105105100'))
   t.false(card('38520000023237'))
 
-  card = tyval.string().card('americanexpress').toFunction()
+  card = tyval.string().card('americanexpress')
   t.true(card('371449635398431'))
   t.false(card('5555555555554444'))
 
   try {
-    card = tyval.string().card('lannister').toFunction()
+    card = tyval.string().card('lannister')
     t.fail()
   } catch (e) {
     t.is(e.message, 'lannister card is not supported')
