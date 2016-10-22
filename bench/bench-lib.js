@@ -9,7 +9,7 @@ const strTest = tyval.string().min(5).max(10).alphanum()
 const arrayTest = tyval.array().max(10).min(2)
 const objTest = tyval.object().notNull().notArray().notDate().notRegExp()
 const objHas = tyval.object().has('test').has('bench').hasNot('nope')
-const objHasFast = tyval.object().has('test', true).has('bench', true).hasNot('nope', true)
+const objHasFast = tyval.object().has('test', { fast: true }).has('bench', { fast: true }).hasNot('nope', { fast: true })
 
 let objToTest = {
   test: 'test42',
